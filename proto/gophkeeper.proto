@@ -1,0 +1,121 @@
+syntax = "proto3";
+
+package shortener;
+
+option go_package = "github.com/avGenie/gophkeeper;gophkeeper";
+
+message UserCredentials {
+    string login = 1;
+    string password = 2;
+}
+
+message AuthorizationToken {
+    string token = 1;
+}
+
+message MetaData {
+    string data = 1;
+}
+
+message LoginPasswordData {
+    string name = 1;
+    string login = 2;
+    string password = 3;
+    MetaData meta = 4;
+}
+
+message CardData {
+    string name = 1;
+    string Number = 2;
+    string Cardholder = 3;
+    int32 ExpirationMonth = 4;
+    int32 ExpirationYear = 5;
+    MetaData meta = 6;
+}
+
+message TextData {
+    string name = 1;
+    string text = 2;
+    MetaData meta = 3;
+}
+
+message BinaryData {
+    string name = 1;
+    bytes data = 2;
+    MetaData meta = 3;
+}
+
+message ErrorMessage {
+    int32 status = 1;
+    string error = 2;
+}
+
+message AuthenticateResponse {
+    ErrorMessage error = 1;
+    AuthorizationToken token = 2;
+}
+
+enum DataType {
+    Type_LoginPassword = 0;
+    Type_Card = 1;
+    Type_Text = 2;
+    Type_Binary = 3;
+    Type_All = 4;
+}
+
+message DataGetterRequest {
+    DataType type = 1;
+    string name = 2;
+}
+
+message DataPreviewResponse {
+    DataType type = 1;
+    string name = 2;
+}
+
+message DataListResponse {
+    ErrorMessage error = 1;
+    repeated DataPreviewResponse data = 2;
+}
+
+message DataRequest {
+    string name = 1;
+}
+
+message LoginPasswordDataResponse {
+    ErrorMessage error = 1;
+    LoginPasswordData data = 2;
+}
+
+message CardDataResponse {
+    ErrorMessage error = 1;
+    CardData data = 2;
+}
+
+message TextDataResponse {
+    ErrorMessage error = 1;
+    TextData data = 2;
+}
+
+message BinaryDataResponse {
+    ErrorMessage error = 1;
+    LoginPasswordData data = 2;
+}
+
+service Gophkeeper {
+    rpc RegisterUser(UserCredentials) returns (ErrorMessage);
+    rpc AuthenticateUser(UserCredentials) returns(AuthenticateResponse);
+
+    rpc SaveLoginPassword(LoginPasswordData) returns(ErrorMessage);
+    rpc SaveCard(CardData) returns(ErrorMessage);
+    rpc SaveText(TextData) returns(ErrorMessage);
+    rpc SaveBinary(BinaryData) returns(ErrorMessage);
+
+    rpc GetListData(DataGetterRequest) returns(DataListResponse);
+    rpc GetLoginPasswordObject(DataRequest) returns(LoginPasswordDataResponse);
+    rpc GetCardObject(DataRequest) returns(CardDataResponse);
+    rpc GetTextObject(DataRequest) returns(TextDataResponse);
+    rpc GetBinaryObject(DataRequest) returns(BinaryDataResponse);
+
+    rpc DeleteObject(DataGetterRequest) returns(ErrorMessage);
+}
