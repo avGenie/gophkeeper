@@ -4,11 +4,17 @@ import (
 	"log"
 
 	"github.com/avGenie/gophkeeper/server/internal/app/config"
+	"github.com/avGenie/gophkeeper/server/internal/app/logger"
 )
 
 func main() {
-	_, err := config.NewConfig()
+	config, err := config.NewConfig()
 	if err != nil {
-		log.Fatalf("config error: %s", err)
+		log.Fatalf("create config error: %s", err)
+	}
+
+	err = logger.Initialize(config)
+	if err != nil {
+		log.Fatalf("initialize logger error: %s", err)
 	}
 }
