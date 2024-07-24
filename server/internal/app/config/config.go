@@ -19,9 +19,18 @@ var (
 
 // Config Server configuration
 type Config struct {
-	GRPCAddress string `json:"grpc_addr"    yaml:"grpc_addr"`
+	Server  ServerConfig  `json:"server"  yaml:"server"`
+	Storage StorageConfig `json:"storage" yaml:"storage"`
+}
+
+type ServerConfig struct {
+	GRPCAddress string `json:"grpc_addr" yaml:"grpc_addr"`
+	LogLevel    string `json:"log_level" yaml:"log_level"`
+}
+
+type StorageConfig struct {
 	DatabaseDSN string `json:"database_dsn" yaml:"database_dsn"`
-	LogLevel    string `json:"log_level"    yaml:"log_level"`
+	MaxPool     int    `json:"max_pool"     yaml:"max_pool"`
 }
 
 // NewConfig Creates new config from yaml file getting from env variable
@@ -50,7 +59,7 @@ func NewConfig() (Config, error) {
 func parseConfigPathEnv() (string, error) {
 	var configPath string
 
-	flag.StringVar(&configPath, "config", "./config.yml", "path to config file")
+	flag.StringVar(&configPath, "c", "./config.yml", "path to config file")
 
 	flag.Parse()
 

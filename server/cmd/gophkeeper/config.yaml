@@ -1,4 +1,7 @@
-gophkeeper_server:
+server:
   grpc_addr: ":9090"
-  database_dsn:
   log_level: "debug"
+
+storage:
+  database_dsn: "dsadsad"
+  max_pool: 10

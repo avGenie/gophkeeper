@@ -7,7 +7,7 @@ import (
 
 // Initialize Initializes zap logger
 func Initialize(config config.Config) error {
-	lvl, err := zap.ParseAtomicLevel(config.LogLevel)
+	lvl, err := zap.ParseAtomicLevel(config.Server.LogLevel)
 	if err != nil {
 		return err
 	}

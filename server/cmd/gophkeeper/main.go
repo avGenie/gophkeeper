@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/avGenie/gophkeeper/server/internal/app/config"
