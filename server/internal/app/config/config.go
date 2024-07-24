@@ -30,7 +30,7 @@ type ServerConfig struct {
 
 type StorageConfig struct {
 	DatabaseDSN string `json:"database_dsn" yaml:"database_dsn"`
-	MaxPool     int    `json:"max_pool"     yaml:"max_pool"`
+	MaxPool     int32  `json:"max_pool"     yaml:"max_pool"`
 }
 
 // NewConfig Creates new config from yaml file getting from env variable

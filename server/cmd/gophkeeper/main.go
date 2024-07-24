@@ -1,11 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/avGenie/gophkeeper/server/internal/app/config"
 	"github.com/avGenie/gophkeeper/server/internal/app/logger"
+	"github.com/avGenie/gophkeeper/server/internal/app/storage/postgres"
+	"go.uber.org/zap"
 )
 
 func main() {
@@ -18,4 +19,10 @@ func main() {
 	if err != nil {
 		log.Fatalf("initialize logger error: %s", err)
 	}
+
+	storage, err := postgres.NewStorage(config.Storage)
+	if err != nil {
+		zap.L().Fatal("failed to init storage", zap.Error(err))
+	}
+	defer storage.Close()
 }

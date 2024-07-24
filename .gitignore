@@ -11,8 +11,10 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
+*.yaml
+
 # Binaries
-cmd/main
+server/cmd/gophkeeper/main
 
 # Dependency directories (remove the comment below to include it)
 vendor/

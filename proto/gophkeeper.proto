@@ -45,8 +45,13 @@ message BinaryData {
     MetaData meta = 3;
 }
 
+enum ErrorStatus {
+    Error_Success = 0;
+    Error_Failed = 1;
+}
+
 message ErrorMessage {
-    int32 status = 1;
+    ErrorStatus status = 1;
     string error = 2;
 }
 
