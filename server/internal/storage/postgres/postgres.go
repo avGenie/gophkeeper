@@ -5,8 +5,8 @@ import (
 	"embed"
 	"fmt"
 
-	"github.com/avGenie/gophkeeper/server/internal/app/config"
-	"github.com/avGenie/gophkeeper/server/internal/app/storage/postgres/migrator"
+	"github.com/avGenie/gophkeeper/server/internal/config"
+	"github.com/avGenie/gophkeeper/server/internal/storage/postgres/migrator"
 	"github.com/jackc/pgx/v5/pgxpool"
 	_ "github.com/jackc/pgx/v5/stdlib"
 )

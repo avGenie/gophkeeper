@@ -1,7 +1,7 @@
 package logger
 
 import (
-	"github.com/avGenie/gophkeeper/server/internal/app/config"
+	"github.com/avGenie/gophkeeper/server/internal/config"
 	"go.uber.org/zap"
 )
 

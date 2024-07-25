@@ -6,8 +6,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/avGenie/gophkeeper/server/internal/app/entity"
-	"github.com/avGenie/gophkeeper/server/internal/app/storage"
+	"github.com/avGenie/gophkeeper/server/internal/entity"
+	"github.com/avGenie/gophkeeper/server/internal/storage"
 	"github.com/jackc/pgerrcode"
 	"github.com/jackc/pgx/v5/pgconn"
 )

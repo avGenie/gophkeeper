@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/avGenie/gophkeeper/server/internal/app/validation"
+	"github.com/avGenie/gophkeeper/server/internal/validation"
 	"gopkg.in/yaml.v3"
 )
 
