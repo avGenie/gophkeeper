@@ -3,6 +3,8 @@ module github.com/avGenie/gophkeeper
 go 1.22.5
 
 require (
+	github.com/golang-jwt/jwt/v4 v4.5.0
+	github.com/google/uuid v1.6.0
 	github.com/jackc/pgerrcode v0.0.0-20240316143900-6e2875d9b438
 	github.com/jackc/pgx/v5 v5.5.5
 	github.com/pressly/goose/v3 v3.21.1

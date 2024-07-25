@@ -3,6 +3,7 @@ package grpc
 import (
 	"fmt"
 	"net"
+	"time"
 
 	"github.com/avGenie/gophkeeper/server/internal/config"
 	"github.com/avGenie/gophkeeper/server/internal/storage"
@@ -12,6 +13,8 @@ import (
 
 	pb "github.com/avGenie/gophkeeper/proto"
 )
+
+const requestTimeout = 3 * time.Second
 
 type GRPCServer struct {
 	pb.GophkeeperServer
@@ -59,9 +62,6 @@ func (s *GRPCServer) Stop() {
 	s.storage.Close()
 	s.server.GracefulStop()
 }
-
-// func (s *GRPCServer)RegisterUser(ctx context.Context, userCreds *pb.UserCredentials) (*pb.ErrorMessage, error)
-// func (s *GRPCServer)AuthenticateUser(ctx context.Context, userCreds *pb.UserCredentials) (*pb.AuthenticateResponse, error)
 
 // func (s *GRPCServer)SaveLoginPassword(ctx context.Context, loginPasswordData *pb.LoginPasswordData) (*pb.ErrorMessage, error)
 // func (s *GRPCServer)SaveCard(ctx context.Context, cardData *pb.CardData) (*pb.ErrorMessage, error)
