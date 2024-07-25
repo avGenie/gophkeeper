@@ -3,5 +3,5 @@ server:
   log_level: "debug"
 
 storage:
-  database_dsn: "dsadsad"
+  database_dsn:
   max_pool: 10
