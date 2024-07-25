@@ -2,19 +2,13 @@ package postgres
 
 import (
 	"context"
-	"database/sql"
 	"embed"
 	"fmt"
 
 	"github.com/avGenie/gophkeeper/server/internal/app/config"
+	"github.com/avGenie/gophkeeper/server/internal/app/storage/postgres/migrator"
 	"github.com/jackc/pgx/v5/pgxpool"
 	_ "github.com/jackc/pgx/v5/stdlib"
-	"github.com/pressly/goose/v3"
-)
-
-const (
-	migrationDB     = "postgres"
-	migrationFolder = "migrations"
 )
 
 //go:embed migrations/*.sql
@@ -57,19 +51,20 @@ func (p *Postgres) Close() {
 }
 
 func migration(dsn string) error {
-	goose.SetBaseFS(migrationFs)
-
-	if err := goose.SetDialect(migrationDB); err != nil {
-		return fmt.Errorf("couldn't set goose dialect: %w", err)
-	}
-
-	db, err := sql.Open("pgx/v5", dsn)
+	migrator, err := migrator.NewMigrator(dsn, migrationFs)
 	if err != nil {
-		return fmt.Errorf("couldn't open sql connection: %w", err)
+		return fmt.Errorf("couldn't create migration object")
 	}
 
-	if err := goose.Up(db, migrationFolder); err != nil {
-		return fmt.Errorf("couldn't up goose migration: %w", err)
+	err = migrator.Up()
+	if err != nil {
+		localErr := fmt.Errorf("couldn't up migration: %w", err)
+
+		if err = migrator.Down(); err != nil {
+			return fmt.Errorf("couldn't down migration after failed up: %w", err)
+		}
+
+		return localErr
 	}
 
 	return nil
