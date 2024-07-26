@@ -28,7 +28,7 @@ func (p *Postgres) CreateUser(ctx context.Context, user entity.User) error {
 	return nil
 }
 
-func (p *Postgres) AuthorizeUser(ctx context.Context, user entity.User) (entity.User, error) {
+func (p *Postgres) GetUser(ctx context.Context, user entity.User) (entity.User, error) {
 	query := `SELECT id, password FROM users WHERE login=$1`
 
 	row := p.pool.QueryRow(ctx, query, user.Login)

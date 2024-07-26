@@ -7,6 +7,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -18,18 +19,18 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GophkeeperClient interface {
-	RegisterUser(ctx context.Context, in *UserCredentials, opts ...grpc.CallOption) (*ErrorMessage, error)
-	AuthenticateUser(ctx context.Context, in *UserCredentials, opts ...grpc.CallOption) (*AuthenticateResponse, error)
-	SaveLoginPassword(ctx context.Context, in *LoginPasswordData, opts ...grpc.CallOption) (*ErrorMessage, error)
-	SaveCard(ctx context.Context, in *CardData, opts ...grpc.CallOption) (*ErrorMessage, error)
-	SaveText(ctx context.Context, in *TextData, opts ...grpc.CallOption) (*ErrorMessage, error)
-	SaveBinary(ctx context.Context, in *BinaryData, opts ...grpc.CallOption) (*ErrorMessage, error)
+	RegisterUser(ctx context.Context, in *UserCredentials, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	AuthenticateUser(ctx context.Context, in *UserCredentials, opts ...grpc.CallOption) (*AuthorizationToken, error)
+	SaveLoginPassword(ctx context.Context, in *LoginPasswordData, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	SaveCard(ctx context.Context, in *CardData, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	SaveText(ctx context.Context, in *TextData, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	SaveBinary(ctx context.Context, in *BinaryData, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetListData(ctx context.Context, in *DataGetterRequest, opts ...grpc.CallOption) (*DataListResponse, error)
-	GetLoginPasswordObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*LoginPasswordDataResponse, error)
-	GetCardObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*CardDataResponse, error)
-	GetTextObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*TextDataResponse, error)
-	GetBinaryObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*BinaryDataResponse, error)
-	DeleteObject(ctx context.Context, in *DataGetterRequest, opts ...grpc.CallOption) (*ErrorMessage, error)
+	GetLoginPasswordObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*LoginPasswordData, error)
+	GetCardObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*CardData, error)
+	GetTextObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*TextData, error)
+	GetBinaryObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*BinaryData, error)
+	DeleteObject(ctx context.Context, in *DataGetterRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type gophkeeperClient struct {
@@ -40,8 +41,8 @@ func NewGophkeeperClient(cc grpc.ClientConnInterface) GophkeeperClient {
 	return &gophkeeperClient{cc}
 }
 
-func (c *gophkeeperClient) RegisterUser(ctx context.Context, in *UserCredentials, opts ...grpc.CallOption) (*ErrorMessage, error) {
-	out := new(ErrorMessage)
+func (c *gophkeeperClient) RegisterUser(ctx context.Context, in *UserCredentials, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/shortener.Gophkeeper/RegisterUser", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -49,8 +50,8 @@ func (c *gophkeeperClient) RegisterUser(ctx context.Context, in *UserCredentials
 	return out, nil
 }
 
-func (c *gophkeeperClient) AuthenticateUser(ctx context.Context, in *UserCredentials, opts ...grpc.CallOption) (*AuthenticateResponse, error) {
-	out := new(AuthenticateResponse)
+func (c *gophkeeperClient) AuthenticateUser(ctx context.Context, in *UserCredentials, opts ...grpc.CallOption) (*AuthorizationToken, error) {
+	out := new(AuthorizationToken)
 	err := c.cc.Invoke(ctx, "/shortener.Gophkeeper/AuthenticateUser", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -58,8 +59,8 @@ func (c *gophkeeperClient) AuthenticateUser(ctx context.Context, in *UserCredent
 	return out, nil
 }
 
-func (c *gophkeeperClient) SaveLoginPassword(ctx context.Context, in *LoginPasswordData, opts ...grpc.CallOption) (*ErrorMessage, error) {
-	out := new(ErrorMessage)
+func (c *gophkeeperClient) SaveLoginPassword(ctx context.Context, in *LoginPasswordData, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/shortener.Gophkeeper/SaveLoginPassword", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -67,8 +68,8 @@ func (c *gophkeeperClient) SaveLoginPassword(ctx context.Context, in *LoginPassw
 	return out, nil
 }
 
-func (c *gophkeeperClient) SaveCard(ctx context.Context, in *CardData, opts ...grpc.CallOption) (*ErrorMessage, error) {
-	out := new(ErrorMessage)
+func (c *gophkeeperClient) SaveCard(ctx context.Context, in *CardData, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/shortener.Gophkeeper/SaveCard", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -76,8 +77,8 @@ func (c *gophkeeperClient) SaveCard(ctx context.Context, in *CardData, opts ...g
 	return out, nil
 }
 
-func (c *gophkeeperClient) SaveText(ctx context.Context, in *TextData, opts ...grpc.CallOption) (*ErrorMessage, error) {
-	out := new(ErrorMessage)
+func (c *gophkeeperClient) SaveText(ctx context.Context, in *TextData, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/shortener.Gophkeeper/SaveText", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -85,8 +86,8 @@ func (c *gophkeeperClient) SaveText(ctx context.Context, in *TextData, opts ...g
 	return out, nil
 }
 
-func (c *gophkeeperClient) SaveBinary(ctx context.Context, in *BinaryData, opts ...grpc.CallOption) (*ErrorMessage, error) {
-	out := new(ErrorMessage)
+func (c *gophkeeperClient) SaveBinary(ctx context.Context, in *BinaryData, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/shortener.Gophkeeper/SaveBinary", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -103,8 +104,8 @@ func (c *gophkeeperClient) GetListData(ctx context.Context, in *DataGetterReques
 	return out, nil
 }
 
-func (c *gophkeeperClient) GetLoginPasswordObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*LoginPasswordDataResponse, error) {
-	out := new(LoginPasswordDataResponse)
+func (c *gophkeeperClient) GetLoginPasswordObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*LoginPasswordData, error) {
+	out := new(LoginPasswordData)
 	err := c.cc.Invoke(ctx, "/shortener.Gophkeeper/GetLoginPasswordObject", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -112,8 +113,8 @@ func (c *gophkeeperClient) GetLoginPasswordObject(ctx context.Context, in *DataR
 	return out, nil
 }
 
-func (c *gophkeeperClient) GetCardObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*CardDataResponse, error) {
-	out := new(CardDataResponse)
+func (c *gophkeeperClient) GetCardObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*CardData, error) {
+	out := new(CardData)
 	err := c.cc.Invoke(ctx, "/shortener.Gophkeeper/GetCardObject", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -121,8 +122,8 @@ func (c *gophkeeperClient) GetCardObject(ctx context.Context, in *DataRequest, o
 	return out, nil
 }
 
-func (c *gophkeeperClient) GetTextObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*TextDataResponse, error) {
-	out := new(TextDataResponse)
+func (c *gophkeeperClient) GetTextObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*TextData, error) {
+	out := new(TextData)
 	err := c.cc.Invoke(ctx, "/shortener.Gophkeeper/GetTextObject", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -130,8 +131,8 @@ func (c *gophkeeperClient) GetTextObject(ctx context.Context, in *DataRequest, o
 	return out, nil
 }
 
-func (c *gophkeeperClient) GetBinaryObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*BinaryDataResponse, error) {
-	out := new(BinaryDataResponse)
+func (c *gophkeeperClient) GetBinaryObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*BinaryData, error) {
+	out := new(BinaryData)
 	err := c.cc.Invoke(ctx, "/shortener.Gophkeeper/GetBinaryObject", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -139,8 +140,8 @@ func (c *gophkeeperClient) GetBinaryObject(ctx context.Context, in *DataRequest,
 	return out, nil
 }
 
-func (c *gophkeeperClient) DeleteObject(ctx context.Context, in *DataGetterRequest, opts ...grpc.CallOption) (*ErrorMessage, error) {
-	out := new(ErrorMessage)
+func (c *gophkeeperClient) DeleteObject(ctx context.Context, in *DataGetterRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/shortener.Gophkeeper/DeleteObject", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -152,18 +153,18 @@ func (c *gophkeeperClient) DeleteObject(ctx context.Context, in *DataGetterReque
 // All implementations must embed UnimplementedGophkeeperServer
 // for forward compatibility
 type GophkeeperServer interface {
-	RegisterUser(context.Context, *UserCredentials) (*ErrorMessage, error)
-	AuthenticateUser(context.Context, *UserCredentials) (*AuthenticateResponse, error)
-	SaveLoginPassword(context.Context, *LoginPasswordData) (*ErrorMessage, error)
-	SaveCard(context.Context, *CardData) (*ErrorMessage, error)
-	SaveText(context.Context, *TextData) (*ErrorMessage, error)
-	SaveBinary(context.Context, *BinaryData) (*ErrorMessage, error)
+	RegisterUser(context.Context, *UserCredentials) (*emptypb.Empty, error)
+	AuthenticateUser(context.Context, *UserCredentials) (*AuthorizationToken, error)
+	SaveLoginPassword(context.Context, *LoginPasswordData) (*emptypb.Empty, error)
+	SaveCard(context.Context, *CardData) (*emptypb.Empty, error)
+	SaveText(context.Context, *TextData) (*emptypb.Empty, error)
+	SaveBinary(context.Context, *BinaryData) (*emptypb.Empty, error)
 	GetListData(context.Context, *DataGetterRequest) (*DataListResponse, error)
-	GetLoginPasswordObject(context.Context, *DataRequest) (*LoginPasswordDataResponse, error)
-	GetCardObject(context.Context, *DataRequest) (*CardDataResponse, error)
-	GetTextObject(context.Context, *DataRequest) (*TextDataResponse, error)
-	GetBinaryObject(context.Context, *DataRequest) (*BinaryDataResponse, error)
-	DeleteObject(context.Context, *DataGetterRequest) (*ErrorMessage, error)
+	GetLoginPasswordObject(context.Context, *DataRequest) (*LoginPasswordData, error)
+	GetCardObject(context.Context, *DataRequest) (*CardData, error)
+	GetTextObject(context.Context, *DataRequest) (*TextData, error)
+	GetBinaryObject(context.Context, *DataRequest) (*BinaryData, error)
+	DeleteObject(context.Context, *DataGetterRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedGophkeeperServer()
 }
 
@@ -171,40 +172,40 @@ type GophkeeperServer interface {
 type UnimplementedGophkeeperServer struct {
 }
 
-func (UnimplementedGophkeeperServer) RegisterUser(context.Context, *UserCredentials) (*ErrorMessage, error) {
+func (UnimplementedGophkeeperServer) RegisterUser(context.Context, *UserCredentials) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegisterUser not implemented")
 }
-func (UnimplementedGophkeeperServer) AuthenticateUser(context.Context, *UserCredentials) (*AuthenticateResponse, error) {
+func (UnimplementedGophkeeperServer) AuthenticateUser(context.Context, *UserCredentials) (*AuthorizationToken, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AuthenticateUser not implemented")
 }
-func (UnimplementedGophkeeperServer) SaveLoginPassword(context.Context, *LoginPasswordData) (*ErrorMessage, error) {
+func (UnimplementedGophkeeperServer) SaveLoginPassword(context.Context, *LoginPasswordData) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SaveLoginPassword not implemented")
 }
-func (UnimplementedGophkeeperServer) SaveCard(context.Context, *CardData) (*ErrorMessage, error) {
+func (UnimplementedGophkeeperServer) SaveCard(context.Context, *CardData) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SaveCard not implemented")
 }
-func (UnimplementedGophkeeperServer) SaveText(context.Context, *TextData) (*ErrorMessage, error) {
+func (UnimplementedGophkeeperServer) SaveText(context.Context, *TextData) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SaveText not implemented")
 }
-func (UnimplementedGophkeeperServer) SaveBinary(context.Context, *BinaryData) (*ErrorMessage, error) {
+func (UnimplementedGophkeeperServer) SaveBinary(context.Context, *BinaryData) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SaveBinary not implemented")
 }
 func (UnimplementedGophkeeperServer) GetListData(context.Context, *DataGetterRequest) (*DataListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetListData not implemented")
 }
-func (UnimplementedGophkeeperServer) GetLoginPasswordObject(context.Context, *DataRequest) (*LoginPasswordDataResponse, error) {
+func (UnimplementedGophkeeperServer) GetLoginPasswordObject(context.Context, *DataRequest) (*LoginPasswordData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLoginPasswordObject not implemented")
 }
-func (UnimplementedGophkeeperServer) GetCardObject(context.Context, *DataRequest) (*CardDataResponse, error) {
+func (UnimplementedGophkeeperServer) GetCardObject(context.Context, *DataRequest) (*CardData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCardObject not implemented")
 }
-func (UnimplementedGophkeeperServer) GetTextObject(context.Context, *DataRequest) (*TextDataResponse, error) {
+func (UnimplementedGophkeeperServer) GetTextObject(context.Context, *DataRequest) (*TextData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTextObject not implemented")
 }
-func (UnimplementedGophkeeperServer) GetBinaryObject(context.Context, *DataRequest) (*BinaryDataResponse, error) {
+func (UnimplementedGophkeeperServer) GetBinaryObject(context.Context, *DataRequest) (*BinaryData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBinaryObject not implemented")
 }
-func (UnimplementedGophkeeperServer) DeleteObject(context.Context, *DataGetterRequest) (*ErrorMessage, error) {
+func (UnimplementedGophkeeperServer) DeleteObject(context.Context, *DataGetterRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteObject not implemented")
 }
 func (UnimplementedGophkeeperServer) mustEmbedUnimplementedGophkeeperServer() {}

@@ -11,5 +11,5 @@ type Storage interface {
 	Close()
 	
 	CreateUser(ctx context.Context, user entity.User) error
-	AuthorizeUser(ctx context.Context, user entity.User) (entity.User, error)
+	GetUser(ctx context.Context, user entity.User) (entity.User, error)
 }

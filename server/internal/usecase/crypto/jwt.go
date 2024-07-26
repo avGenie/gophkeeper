@@ -24,7 +24,7 @@ type Claims struct {
 	UserID entity.UserID
 }
 
-func BuildJWTString(userID entity.UserID) (string, error) {
+func BuildJWTString(userID entity.UserID) (entity.Token, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, Claims{
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(tokenTimeout)),
@@ -37,7 +37,7 @@ func BuildJWTString(userID entity.UserID) (string, error) {
 		return "", err
 	}
 
-	return tokenString, nil
+	return entity.Token(tokenString), nil
 }
 
 func GetUserID(tokenString string) (entity.UserID, error) {

@@ -63,15 +63,15 @@ func (s *GRPCServer) Stop() {
 	s.server.GracefulStop()
 }
 
-// func (s *GRPCServer)SaveLoginPassword(ctx context.Context, loginPasswordData *pb.LoginPasswordData) (*pb.ErrorMessage, error)
-// func (s *GRPCServer)SaveCard(ctx context.Context, cardData *pb.CardData) (*pb.ErrorMessage, error)
-// func (s *GRPCServer)SaveText(ctx context.Context, textData *pb.TextData) (*pb.ErrorMessage, error)
-// func (s *GRPCServer)SaveBinary(ctx context.Context, binaryData *pb.BinaryData) (*pb.ErrorMessage, error)
+// func (s *GRPCServer)SaveLoginPassword(ctx context.Context, loginPasswordData *pb.LoginPasswordData) (*emptypb.Empty, error)
+// func (s *GRPCServer)SaveCard(ctx context.Context, cardData *pb.CardData) (*emptypb.Empty, error)
+// func (s *GRPCServer)SaveText(ctx context.Context, textData *pb.TextData) (*emptypb.Empty, error)
+// func (s *GRPCServer)SaveBinary(ctx context.Context, binaryData *pb.BinaryData) (*emptypb.Empty, error)
 
 // func (s *GRPCServer)GetListData(ctx context.Context, dataGetterRequest *pb.DataGetterRequest) (*pb.DataListResponse, error)
-// func (s *GRPCServer)GetLoginPasswordObject(ctx context.Context, request *pb.DataRequest) (*pb.LoginPasswordDataResponse, error)
-// func (s *GRPCServer)GetCardObject(ctx context.Context, request *pb.DataRequest) (*pb.CardDataResponse, error)
-// func (s *GRPCServer)GetTextObject(ctx context.Context, request *pb.DataRequest) (*pb.TextDataResponse, error)
-// func (s *GRPCServer)GetBinaryObject(ctx context.Context, request *pb.DataRequest) (*pb.BinaryDataResponse, error)
+// func (s *GRPCServer)GetLoginPasswordObject(ctx context.Context, request *pb.DataRequest) (*pb.LoginPasswordData, error)
+// func (s *GRPCServer)GetCardObject(ctx context.Context, request *pb.DataRequest) (*pb.CardData, error)
+// func (s *GRPCServer)GetTextObject(ctx context.Context, request *pb.DataRequest) (*pb.TextData, error)
+// func (s *GRPCServer)GetBinaryObject(ctx context.Context, request *pb.DataRequest) (*pb.BinaryData, error)
 
-// func (s *GRPCServer)DeleteObject(ctx context.Context, dataGetterRequest *pb.DataGetterRequest) (*pb.ErrorMessage, error)
+// func (s *GRPCServer)DeleteObject(ctx context.Context, dataGetterRequest *pb.DataGetterRequest) (*emptypb.Empty, error)

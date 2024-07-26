@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "google/protobuf/empty.proto";
+
 package shortener;
 
 option go_package = "github.com/avGenie/gophkeeper;gophkeeper";
@@ -79,8 +81,7 @@ message DataPreviewResponse {
 }
 
 message DataListResponse {
-    ErrorMessage error = 1;
-    repeated DataPreviewResponse data = 2;
+    repeated DataPreviewResponse data = 1;
 }
 
 message DataRequest {
@@ -104,23 +105,23 @@ message TextDataResponse {
 
 message BinaryDataResponse {
     ErrorMessage error = 1;
-    LoginPasswordData data = 2;
+    BinaryData data = 2;
 }
 
 service Gophkeeper {
-    rpc RegisterUser(UserCredentials) returns (ErrorMessage);
-    rpc AuthenticateUser(UserCredentials) returns(AuthenticateResponse);
+    rpc RegisterUser(UserCredentials) returns (google.protobuf.Empty);
+    rpc AuthenticateUser(UserCredentials) returns(AuthorizationToken);
 
-    rpc SaveLoginPassword(LoginPasswordData) returns(ErrorMessage);
-    rpc SaveCard(CardData) returns(ErrorMessage);
-    rpc SaveText(TextData) returns(ErrorMessage);
-    rpc SaveBinary(BinaryData) returns(ErrorMessage);
+    rpc SaveLoginPassword(LoginPasswordData) returns(google.protobuf.Empty);
+    rpc SaveCard(CardData) returns(google.protobuf.Empty);
+    rpc SaveText(TextData) returns(google.protobuf.Empty);
+    rpc SaveBinary(BinaryData) returns(google.protobuf.Empty);
 
     rpc GetListData(DataGetterRequest) returns(DataListResponse);
-    rpc GetLoginPasswordObject(DataRequest) returns(LoginPasswordDataResponse);
-    rpc GetCardObject(DataRequest) returns(CardDataResponse);
-    rpc GetTextObject(DataRequest) returns(TextDataResponse);
-    rpc GetBinaryObject(DataRequest) returns(BinaryDataResponse);
+    rpc GetLoginPasswordObject(DataRequest) returns(LoginPasswordData);
+    rpc GetCardObject(DataRequest) returns(CardData);
+    rpc GetTextObject(DataRequest) returns(TextData);
+    rpc GetBinaryObject(DataRequest) returns(BinaryData);
 
-    rpc DeleteObject(DataGetterRequest) returns(ErrorMessage);
+    rpc DeleteObject(DataGetterRequest) returns(google.protobuf.Empty);
 }
