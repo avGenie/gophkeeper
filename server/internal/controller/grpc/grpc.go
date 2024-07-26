@@ -16,6 +16,7 @@ import (
 
 const requestTimeout = 3 * time.Second
 
+// GRPCServer GRPC server struct
 type GRPCServer struct {
 	pb.GophkeeperServer
 
@@ -25,6 +26,7 @@ type GRPCServer struct {
 	storage storage.Storage
 }
 
+// NewServer Creates GRPC server
 func NewServer(config config.Config) (*GRPCServer, error) {
 	storage, err := postgres.NewStorage(config.Storage)
 	if err != nil {
@@ -38,6 +40,7 @@ func NewServer(config config.Config) (*GRPCServer, error) {
 	}, nil
 }
 
+// Start Starts GRPC server
 func (s *GRPCServer) Start() {
 	listen, err := net.Listen("tcp", s.config.Server.GRPCAddress)
 	if err != nil {
@@ -46,7 +49,6 @@ func (s *GRPCServer) Start() {
 		return
 	}
 
-	// регистрируем сервис
 	pb.RegisterGophkeeperServer(s.server, s)
 
 	zap.L().Info("Server gRPC starts", zap.String("address:", s.config.Server.GRPCAddress))
@@ -58,6 +60,7 @@ func (s *GRPCServer) Start() {
 	}
 }
 
+// Stop Stops GRPC server
 func (s *GRPCServer) Stop() {
 	s.storage.Close()
 	s.server.GracefulStop()

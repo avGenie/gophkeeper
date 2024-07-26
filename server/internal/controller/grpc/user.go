@@ -15,6 +15,7 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
+// RegisterUser Implements user registration. Encrypts user password and saves its credentials
 func (s *GRPCServer) RegisterUser(ctx context.Context, userCreds *pb.UserCredentials) (*emptypb.Empty, error) {
 	user := converter.ConvertPbUserCredentialsToUser(userCreds)
 
@@ -52,6 +53,7 @@ func (s *GRPCServer) RegisterUser(ctx context.Context, userCreds *pb.UserCredent
 	return &emptypb.Empty{}, nil
 }
 
+// AuthenticateUser Implements user authentication. Validates user password and creates token.
 func (s *GRPCServer) AuthenticateUser(ctx context.Context, userCreds *pb.UserCredentials) (*pb.AuthorizationToken, error) {
 	user := converter.ConvertPbUserCredentialsToUser(userCreds)
 

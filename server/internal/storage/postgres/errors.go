@@ -1,5 +1,5 @@
 package postgres
 
 const (
-	QueryRowMessage = "couldn't return row from postgres"
+	queryRowMessage = "couldn't return row from postgres"
 )

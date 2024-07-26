@@ -17,17 +17,19 @@ var (
 	ErrGetConfigPath = fmt.Errorf("couldn't get config file path from environment")
 )
 
-// Config Server configuration
+// Config All application configuration
 type Config struct {
 	Server  ServerConfig  `json:"server"  yaml:"server"`
 	Storage StorageConfig `json:"storage" yaml:"storage"`
 }
 
+// ServerConfig Server configuration
 type ServerConfig struct {
 	GRPCAddress string `json:"grpc_addr" yaml:"grpc_addr"`
 	LogLevel    string `json:"log_level" yaml:"log_level"`
 }
 
+// ServerConfig Storage configuration
 type StorageConfig struct {
 	DatabaseDSN string `json:"database_dsn" yaml:"database_dsn"`
 	MaxPool     int32  `json:"max_pool"     yaml:"max_pool"`

@@ -12,6 +12,7 @@ import (
 	"github.com/jackc/pgx/v5/pgconn"
 )
 
+// CreateUser Saves user in postgres storage
 func (p *Postgres) CreateUser(ctx context.Context, user entity.User) error {
 	query := `INSERT INTO users VALUES($1, $2, $3)`
 
@@ -28,12 +29,13 @@ func (p *Postgres) CreateUser(ctx context.Context, user entity.User) error {
 	return nil
 }
 
+// CreateUser Returns user from postgres storage
 func (p *Postgres) GetUser(ctx context.Context, user entity.User) (entity.User, error) {
 	query := `SELECT id, password FROM users WHERE login=$1`
 
 	row := p.pool.QueryRow(ctx, query, user.Login)
 	if row == nil {
-		return entity.User{}, fmt.Errorf("%s while authorize user", QueryRowMessage)
+		return entity.User{}, fmt.Errorf("%s while authorize user", queryRowMessage)
 	}
 
 	err := row.Scan(&user.ID, &user.Password)

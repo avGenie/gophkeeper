@@ -6,10 +6,12 @@ import (
 	"fmt"
 
 	"github.com/avGenie/gophkeeper/server/internal/config"
-	"github.com/avGenie/gophkeeper/server/internal/storage/postgres/migrator"
+	"github.com/avGenie/gophkeeper/server/internal/usecase/migrator"
 	"github.com/jackc/pgx/v5/pgxpool"
 	_ "github.com/jackc/pgx/v5/stdlib"
 )
+
+const driverName = "pgx/v5"
 
 //go:embed migrations/*.sql
 var migrationFs embed.FS
@@ -51,7 +53,7 @@ func (p *Postgres) Close() {
 }
 
 func migration(dsn string) error {
-	migrator, err := migrator.NewMigrator(dsn, migrationFs)
+	migrator, err := migrator.NewMigrator(dsn, driverName, migrationFs)
 	if err != nil {
 		return fmt.Errorf("couldn't create migration object")
 	}

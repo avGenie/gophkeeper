@@ -6,6 +6,7 @@ import (
 	pb "github.com/avGenie/gophkeeper/proto"
 )
 
+// ConvertTokenToPbAuthToken Converts protobuf user creds app user creds
 func ConvertPbUserCredentialsToUser(pbUser *pb.UserCredentials) entity.User {
 	return entity.User{
 		Login:    pbUser.GetLogin(),

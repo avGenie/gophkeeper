@@ -13,11 +13,13 @@ import (
 	"go.uber.org/zap"
 )
 
+// App Main gophkeeper server application
 type App struct {
 	config config.Config
 	server controller.GophkeeperServer
 }
 
+// NewApp Creates main application
 func NewApp(config config.Config) (*App, error) {
 	server, err := grpc.NewServer(config)
 	if err != nil {
@@ -30,6 +32,7 @@ func NewApp(config config.Config) (*App, error) {
 	}, nil
 }
 
+// Run Starts main application
 func (a *App) Run() {
 	ctx, cancel := signal.NotifyContext(
 		context.Background(),
