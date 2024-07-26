@@ -5,7 +5,8 @@ import (
 	"github.com/google/uuid"
 )
 
-func CreateUserID() entity.UserID {
+// CreateUUID Creates uuid using google algorithm
+func CreateUUID() entity.UserID {
 	uuid := uuid.New()
 
 	return entity.UserID(uuid.String())

@@ -25,7 +25,7 @@ func (s *GRPCServer) RegisterUser(ctx context.Context, userCreds *pb.UserCredent
 		return nil, status.Errorf(codes.InvalidArgument, FailedUserCredentials)
 	}
 
-	user.ID = crypto.CreateUserID()
+	user.ID = crypto.CreateUUID()
 
 	user, err := crypto.HashPassword(user)
 	if err != nil {

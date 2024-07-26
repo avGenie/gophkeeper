@@ -12,10 +12,14 @@ const (
 	bcryptCost = 14
 )
 
+// Hash errors
+//
+// ErrWrongPassword - returned if plain password is not an equivalent hashed password
 var (
 	ErrWrongPassword = errors.New("wrong password")
 )
 
+// HashPassword Hashes password using bcrypt algorithm
 func HashPassword(user entity.User) (entity.User, error) {
 	hashedPassword, err := hashPassword(user.Password)
 	if err != nil {
@@ -27,6 +31,7 @@ func HashPassword(user entity.User) (entity.User, error) {
 	return user, nil
 }
 
+// CheckPasswordHash Compares a bcrypt hashed password with its possible plaintext equivalent
 func CheckPasswordHash(password, hash string) error {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	if err != nil {

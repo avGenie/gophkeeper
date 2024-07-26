@@ -14,16 +14,22 @@ const (
 	secretKey    = "5269889d400bbf2dc66216f37b2839bb"
 )
 
+// JWT errors
+//
+// ErrTokenNotValid - returned if token is not valid
+// ErrTokenExpired - returned if token is expired
 var (
 	ErrTokenNotValid = errors.New("token is not valid")
 	ErrTokenExpired  = errors.New("token is expired")
 )
 
+// Claims Contains token payload (user id)
 type Claims struct {
 	jwt.RegisteredClaims
 	UserID entity.UserID
 }
 
+// BuildJWTString Creates JSON Web Token
 func BuildJWTString(userID entity.UserID) (entity.Token, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, Claims{
 		RegisteredClaims: jwt.RegisteredClaims{
@@ -40,6 +46,7 @@ func BuildJWTString(userID entity.UserID) (entity.Token, error) {
 	return entity.Token(tokenString), nil
 }
 
+// GetUserID Obtaines user id from JSON Web Token
 func GetUserID(tokenString string) (entity.UserID, error) {
 	claims := &Claims{}
 	token, err := jwt.ParseWithClaims(tokenString, claims,
