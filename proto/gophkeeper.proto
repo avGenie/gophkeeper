@@ -69,6 +69,7 @@ enum DataType {
     Type_Text = 2;
     Type_Binary = 3;
     Type_All = 4;
+    Type_Invalid = 5;
 }
 
 message DataGetterRequest {
@@ -123,6 +124,11 @@ service Gophkeeper {
     rpc GetCardObject(DataRequest) returns(CardData);
     rpc GetTextObject(DataRequest) returns(TextData);
     rpc GetBinaryObject(DataRequest) returns(BinaryData);
+
+    rpc UpdateLoginPassword(LoginPasswordData) returns(google.protobuf.Empty);
+    rpc UpdateCard(CardData) returns(google.protobuf.Empty);
+    rpc UpdateText(TextData) returns(google.protobuf.Empty);
+    rpc UpdateBinary(BinaryData) returns(google.protobuf.Empty);
 
     rpc DeleteObject(DataGetterRequest) returns(google.protobuf.Empty);
 }

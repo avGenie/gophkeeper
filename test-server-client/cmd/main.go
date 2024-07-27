@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 
-	"github.com/avGenie/gophkeeper/test-server-client/internal/entity"
 	"github.com/avGenie/gophkeeper/test-server-client/internal/grpc"
 )
 
@@ -67,10 +66,10 @@ func main() {
 
 	// fmt.Println(card)
 
-	err = client.DeleteDataObject(entity.DataRequestLoginPassword, "google creds", token)
-	if err != nil {
-		log.Fatal(err)
-	}
+	// err = client.DeleteDataObject(entity.DataRequestLoginPassword, "google creds", token)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 
 	// err = client.DeleteDataObject(entity.DataRequestText, "google text", token)
 	// if err != nil {
@@ -81,6 +80,30 @@ func main() {
 	// if err != nil {
 	// 	log.Fatal(err)
 	// }
+
+	// err = client.UpdateLoginPasswordUser("google creds", "looogggin", "qwerty", "rwr", token)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// err = client.UpdateText("google text", "tezxt adsad text", "3413123", token)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	err = client.UpdateCard(
+		"card 1",
+		"111122223333",
+		"",
+		5,
+		2030,
+		444,
+		"kjgjhghj",
+		token,
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	client.Stop()
 }

@@ -24,4 +24,8 @@ type Storage interface {
 	DeleteLoginPasswordData(ctx context.Context, name entity.DataName, userID entity.UserID) error
 	DeleteTextData(ctx context.Context, name entity.DataName, userID entity.UserID) error
 	DeleteCardData(ctx context.Context, name entity.DataName, userID entity.UserID) error
+
+	UpdateLoginPasswordData(ctx context.Context, data entity.LoginPassword, userID entity.UserID) error
+	UpdateTextData(ctx context.Context, data entity.TextData, userID entity.UserID) error
+	UpdateCardData(ctx context.Context, data entity.CardData, userID entity.UserID) error
 }

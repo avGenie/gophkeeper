@@ -30,6 +30,10 @@ type GophkeeperClient interface {
 	GetCardObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*CardData, error)
 	GetTextObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*TextData, error)
 	GetBinaryObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*BinaryData, error)
+	UpdateLoginPassword(ctx context.Context, in *LoginPasswordData, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UpdateCard(ctx context.Context, in *CardData, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UpdateText(ctx context.Context, in *TextData, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UpdateBinary(ctx context.Context, in *BinaryData, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DeleteObject(ctx context.Context, in *DataGetterRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
@@ -140,6 +144,42 @@ func (c *gophkeeperClient) GetBinaryObject(ctx context.Context, in *DataRequest,
 	return out, nil
 }
 
+func (c *gophkeeperClient) UpdateLoginPassword(ctx context.Context, in *LoginPasswordData, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/shortener.Gophkeeper/UpdateLoginPassword", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gophkeeperClient) UpdateCard(ctx context.Context, in *CardData, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/shortener.Gophkeeper/UpdateCard", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gophkeeperClient) UpdateText(ctx context.Context, in *TextData, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/shortener.Gophkeeper/UpdateText", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gophkeeperClient) UpdateBinary(ctx context.Context, in *BinaryData, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/shortener.Gophkeeper/UpdateBinary", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *gophkeeperClient) DeleteObject(ctx context.Context, in *DataGetterRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/shortener.Gophkeeper/DeleteObject", in, out, opts...)
@@ -164,6 +204,10 @@ type GophkeeperServer interface {
 	GetCardObject(context.Context, *DataRequest) (*CardData, error)
 	GetTextObject(context.Context, *DataRequest) (*TextData, error)
 	GetBinaryObject(context.Context, *DataRequest) (*BinaryData, error)
+	UpdateLoginPassword(context.Context, *LoginPasswordData) (*emptypb.Empty, error)
+	UpdateCard(context.Context, *CardData) (*emptypb.Empty, error)
+	UpdateText(context.Context, *TextData) (*emptypb.Empty, error)
+	UpdateBinary(context.Context, *BinaryData) (*emptypb.Empty, error)
 	DeleteObject(context.Context, *DataGetterRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedGophkeeperServer()
 }
@@ -204,6 +248,18 @@ func (UnimplementedGophkeeperServer) GetTextObject(context.Context, *DataRequest
 }
 func (UnimplementedGophkeeperServer) GetBinaryObject(context.Context, *DataRequest) (*BinaryData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBinaryObject not implemented")
+}
+func (UnimplementedGophkeeperServer) UpdateLoginPassword(context.Context, *LoginPasswordData) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateLoginPassword not implemented")
+}
+func (UnimplementedGophkeeperServer) UpdateCard(context.Context, *CardData) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCard not implemented")
+}
+func (UnimplementedGophkeeperServer) UpdateText(context.Context, *TextData) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateText not implemented")
+}
+func (UnimplementedGophkeeperServer) UpdateBinary(context.Context, *BinaryData) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateBinary not implemented")
 }
 func (UnimplementedGophkeeperServer) DeleteObject(context.Context, *DataGetterRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteObject not implemented")
@@ -419,6 +475,78 @@ func _Gophkeeper_GetBinaryObject_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Gophkeeper_UpdateLoginPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LoginPasswordData)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GophkeeperServer).UpdateLoginPassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/shortener.Gophkeeper/UpdateLoginPassword",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GophkeeperServer).UpdateLoginPassword(ctx, req.(*LoginPasswordData))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Gophkeeper_UpdateCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CardData)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GophkeeperServer).UpdateCard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/shortener.Gophkeeper/UpdateCard",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GophkeeperServer).UpdateCard(ctx, req.(*CardData))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Gophkeeper_UpdateText_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TextData)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GophkeeperServer).UpdateText(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/shortener.Gophkeeper/UpdateText",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GophkeeperServer).UpdateText(ctx, req.(*TextData))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Gophkeeper_UpdateBinary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BinaryData)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GophkeeperServer).UpdateBinary(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/shortener.Gophkeeper/UpdateBinary",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GophkeeperServer).UpdateBinary(ctx, req.(*BinaryData))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Gophkeeper_DeleteObject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DataGetterRequest)
 	if err := dec(in); err != nil {
@@ -487,6 +615,22 @@ var Gophkeeper_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBinaryObject",
 			Handler:    _Gophkeeper_GetBinaryObject_Handler,
+		},
+		{
+			MethodName: "UpdateLoginPassword",
+			Handler:    _Gophkeeper_UpdateLoginPassword_Handler,
+		},
+		{
+			MethodName: "UpdateCard",
+			Handler:    _Gophkeeper_UpdateCard_Handler,
+		},
+		{
+			MethodName: "UpdateText",
+			Handler:    _Gophkeeper_UpdateText_Handler,
+		},
+		{
+			MethodName: "UpdateBinary",
+			Handler:    _Gophkeeper_UpdateBinary_Handler,
 		},
 		{
 			MethodName: "DeleteObject",
