@@ -46,6 +46,14 @@ func CreatePbCardData(name, number, cardholder string, expireMonth, expireYear, 
 	}
 }
 
+
+func CreatePbDataGetterRequest(name string, requestType entity.DataRequestType) *pb.DataGetterRequest {
+	return &pb.DataGetterRequest{
+		Type: ConvertDataRequestTypeToPbDataType(requestType),
+		Name: name,
+	}
+}
+
 func ConvertPbLoginPasswordDataToLoginPassword(data *pb.LoginPasswordData) entity.LoginPassword {
 	return entity.LoginPassword{
 		Name:     data.GetName(),
@@ -72,5 +80,18 @@ func ConvertPbCardDataToCard(data *pb.CardData) entity.CardData {
 		Code:            int(data.GetCode()),
 		Cardholder:      data.GetCardholder(),
 		Metadata:        data.GetMeta().Data,
+	}
+}
+
+func ConvertDataRequestTypeToPbDataType(requestType entity.DataRequestType) pb.DataType {
+	switch requestType {
+	case entity.DataRequestLoginPassword:
+		return pb.DataType_Type_LoginPassword
+	case entity.DataRequestText:
+		return pb.DataType_Type_Text
+	case entity.DataRequestCard:
+		return pb.DataType_Type_Card
+	default:
+		return pb.DataType_Type_Invalid
 	}
 }

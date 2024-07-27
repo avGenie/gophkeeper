@@ -75,6 +75,7 @@ const (
 	DataType_Type_Text          DataType = 2
 	DataType_Type_Binary        DataType = 3
 	DataType_Type_All           DataType = 4
+	DataType_Type_Invalid       DataType = 4
 )
 
 // Enum value maps for DataType.

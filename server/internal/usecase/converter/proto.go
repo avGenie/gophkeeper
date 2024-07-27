@@ -99,6 +99,29 @@ func ConvertCardToPbCard(data entity.CardData) *pb.CardData {
 	}
 }
 
+// ConvertPbDataRequestToDataName Converts protobuf data request to app data name
 func ConvertPbDataRequestToDataName(data *pb.DataRequest) entity.DataName {
 	return entity.DataName(data.GetName())
+}
+
+// ConvertPbDataGetterRequestToDataRequest Converts protobuf data getter request to app data request
+func ConvertPbDataGetterRequestToDataRequest(data *pb.DataGetterRequest) entity.DataRequest {
+	return entity.DataRequest{
+		Type: ConvertPbDataTypeToDataRequestType(data.Type),
+		Name: entity.DataName(data.GetName()),
+	}
+}
+
+// ConvertPbDataTypeToDataRequestType Converts protobuf data type to app data request type
+func ConvertPbDataTypeToDataRequestType(data pb.DataType) entity.DataRequestType {
+	switch data.Type() {
+	case pb.DataType_Type_LoginPassword.Type():
+		return entity.DataRequestLoginPassword
+	case pb.DataType_Type_Text.Type():
+		return entity.DataRequestText
+	case pb.DataType_Type_Card.Type():
+		return entity.DataRequestCard
+	default:
+		return entity.DataRequestInvalid
+	}
 }

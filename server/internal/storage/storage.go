@@ -20,4 +20,8 @@ type Storage interface {
 	GetLoginPasswordData(ctx context.Context, name entity.DataName, userID entity.UserID) (entity.LoginPassword, error)
 	GetTextData(ctx context.Context, name entity.DataName, userID entity.UserID) (entity.TextData, error)
 	GetCardData(ctx context.Context, name entity.DataName, userID entity.UserID) (entity.CardData, error)
+
+	DeleteLoginPasswordData(ctx context.Context, name entity.DataName, userID entity.UserID) error
+	DeleteTextData(ctx context.Context, name entity.DataName, userID entity.UserID) error
+	DeleteCardData(ctx context.Context, name entity.DataName, userID entity.UserID) error
 }
