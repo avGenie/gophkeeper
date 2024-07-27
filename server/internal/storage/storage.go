@@ -12,4 +12,6 @@ type Storage interface {
 	
 	CreateUser(ctx context.Context, user entity.User) error
 	GetUser(ctx context.Context, user entity.User) (entity.User, error)
+
+	SaveLoginPasswordData(ctx context.Context, data entity.LoginPassword, userID entity.UserID) error
 }

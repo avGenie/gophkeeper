@@ -21,5 +21,10 @@ func main() {
 
 	log.Println(token)
 
+	err = client.SaveLoginPasswordUser("google creds", "looogggin", "qwerty", "", token)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	client.Stop()
 }

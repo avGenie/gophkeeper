@@ -12,7 +12,7 @@ func (c *Client) RegisterUser(login, password string) error {
 	defer cancel()
 
 	userCreds := &pb.UserCredentials{
-		Login: login,
+		Login:    login,
 		Password: password,
 	}
 
@@ -26,7 +26,7 @@ func (c *Client) AuthenticateUser(login, password string) (string, error) {
 	defer cancel()
 
 	userCreds := &pb.UserCredentials{
-		Login: login,
+		Login:    login,
 		Password: password,
 	}
 
@@ -35,5 +35,5 @@ func (c *Client) AuthenticateUser(login, password string) (string, error) {
 		return "", err
 	}
 
-	return token.String(), err
+	return token.GetToken(), err
 }

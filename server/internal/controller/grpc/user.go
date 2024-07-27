@@ -92,7 +92,7 @@ func (s *GRPCServer) AuthenticateUser(ctx context.Context, userCreds *pb.UserCre
 		return nil, status.Errorf(codes.Internal, InternalServerError)
 	}
 
-	token, err := crypto.BuildJWTString(user.ID)
+	token, err := crypto.BuildJWTString(userStorage.ID)
 	if err != nil {
 		zap.S().Error("failed to create token", zap.Error(err))
 

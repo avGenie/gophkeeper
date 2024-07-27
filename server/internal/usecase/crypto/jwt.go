@@ -11,7 +11,6 @@ import (
 
 const (
 	tokenTimeout = time.Hour * 3
-	secretKey    = "5269889d400bbf2dc66216f37b2839bb"
 )
 
 // JWT errors
@@ -21,6 +20,8 @@ const (
 var (
 	ErrTokenNotValid = errors.New("token is not valid")
 	ErrTokenExpired  = errors.New("token is expired")
+
+	secretKey = []byte("secret_key")
 )
 
 // Claims Contains token payload (user id)
@@ -38,7 +39,7 @@ func BuildJWTString(userID entity.UserID) (entity.Token, error) {
 		UserID: userID,
 	})
 
-	tokenString, err := token.SignedString([]byte(secretKey))
+	tokenString, err := token.SignedString(secretKey)
 	if err != nil {
 		return "", err
 	}
@@ -47,14 +48,14 @@ func BuildJWTString(userID entity.UserID) (entity.Token, error) {
 }
 
 // GetUserID Obtaines user id from JSON Web Token
-func GetUserID(tokenString string) (entity.UserID, error) {
+func GetUserID(encryptedToken entity.Token) (entity.UserID, error) {
 	claims := &Claims{}
-	token, err := jwt.ParseWithClaims(tokenString, claims,
+	token, err := jwt.ParseWithClaims(string(encryptedToken), claims,
 		func(t *jwt.Token) (interface{}, error) {
 			if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, fmt.Errorf("unexpected signing method while parsing jwt: %v", t.Header["alg"])
 			}
-			return []byte(secretKey), nil
+			return secretKey, nil
 		})
 
 	if err != nil {
