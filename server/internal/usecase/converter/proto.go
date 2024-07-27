@@ -37,3 +37,25 @@ func ConvertPbLoginPasswordToLoginPassword(data *pb.LoginPasswordData) entity.Lo
 		Metadata: ConvertPbMetadataToMetadata(data.GetMeta()),
 	}
 }
+
+// ConvertPbTextToText Converts protobuf text data to app text data
+func ConvertPbTextToText(data *pb.TextData) entity.TextData {
+	return entity.TextData{
+		Name:     data.GetName(),
+		Text:     data.GetText(),
+		Metadata: ConvertPbMetadataToMetadata(data.GetMeta()),
+	}
+}
+
+// ConvertPbCardToCard Converts protobuf card data to app card data
+func ConvertPbCardToCard(data *pb.CardData) entity.CardData {
+	return entity.CardData{
+		Name:            data.GetName(),
+		Number:          data.GetNumber(),
+		ExpirationMonth: int(data.GetExpirationMonth()),
+		ExpirationYear:  int(data.GetExpirationYear()),
+		Code:            int(data.GetCode()),
+		Cardholder:      data.GetCardholder(),
+		Metadata:        ConvertPbMetadataToMetadata(data.GetMeta()),
+	}
+}

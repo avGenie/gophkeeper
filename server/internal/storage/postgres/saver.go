@@ -27,3 +27,37 @@ func (p *Postgres) SaveLoginPasswordData(ctx context.Context, data entity.LoginP
 
 	return nil
 }
+
+// SaveTextData Saves text data to postgres storage
+func (p *Postgres) SaveTextData(ctx context.Context, data entity.TextData, userID entity.UserID) error {
+	query := `INSERT INTO text_data VALUES($1, $2, $3, $4)`
+
+	_, err := p.pool.Exec(ctx, query, userID, data.Name, data.Text, data.Metadata.Data)
+	if err != nil {
+		var pgErr *pgconn.PgError
+		if errors.As(err, &pgErr) && pgerrcode.IsIntegrityConstraintViolation(pgErr.Code) {
+			return storage.ErrDataExists
+		}
+
+		return fmt.Errorf("couldn't execute save text data postgres request: %w", err)
+	}
+
+	return nil
+}
+
+// SaveCardData Saves card data to postgres storage
+func (p *Postgres) SaveCardData(ctx context.Context, data entity.CardData, userID entity.UserID) error {
+	query := `INSERT INTO cards_data VALUES($1, $2, $3, $4, $5, $6, $7, $8)`
+
+	_, err := p.pool.Exec(ctx, query, userID, data.Name, data.Number, data.ExpirationMonth, data.ExpirationYear, data.Code, data.Cardholder, data.Metadata.Data)
+	if err != nil {
+		var pgErr *pgconn.PgError
+		if errors.As(err, &pgErr) && pgerrcode.IsIntegrityConstraintViolation(pgErr.Code) {
+			return storage.ErrDataExists
+		}
+
+		return fmt.Errorf("couldn't execute save card data postgres request: %w", err)
+	}
+
+	return nil
+}

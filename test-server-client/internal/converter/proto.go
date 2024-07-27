@@ -12,9 +12,17 @@ func CreatePbMetadata(meta string) *pb.MetaData {
 
 func CreatePbLoginPasswordData(name, login, password, meta string) *pb.LoginPasswordData {
 	return &pb.LoginPasswordData{
-		Name: name,
-		Login: login,
+		Name:     name,
+		Login:    login,
 		Password: password,
+		Meta:     CreatePbMetadata(meta),
+	}
+}
+
+func CreatePbTextData(name, text, meta string) *pb.TextData {
+	return &pb.TextData{
+		Name: name,
+		Text: text,
 		Meta: CreatePbMetadata(meta),
 	}
 }

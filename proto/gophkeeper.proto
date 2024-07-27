@@ -32,7 +32,8 @@ message CardData {
     string Cardholder = 3;
     int32 ExpirationMonth = 4;
     int32 ExpirationYear = 5;
-    MetaData meta = 6;
+    int32 Code = 6;
+    MetaData meta = 7;
 }
 
 message TextData {
