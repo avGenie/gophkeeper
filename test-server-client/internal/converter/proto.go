@@ -54,3 +54,23 @@ func ConvertPbLoginPasswordDataToLoginPassword(data *pb.LoginPasswordData) entit
 		Metadata: data.GetMeta().Data,
 	}
 }
+
+func ConvertPbTextDataToText(data *pb.TextData) entity.TextData {
+	return entity.TextData{
+		Name:     data.GetName(),
+		Text:     data.GetText(),
+		Metadata: data.GetMeta().Data,
+	}
+}
+
+func ConvertPbCardDataToCard(data *pb.CardData) entity.CardData {
+	return entity.CardData{
+		Name:            data.GetName(),
+		Number:          data.GetNumber(),
+		ExpirationMonth: int(data.GetExpirationMonth()),
+		ExpirationYear:  int(data.GetExpirationYear()),
+		Code:            int(data.GetCode()),
+		Cardholder:      data.GetCardholder(),
+		Metadata:        data.GetMeta().Data,
+	}
+}

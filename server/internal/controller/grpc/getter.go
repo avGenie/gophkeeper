@@ -50,3 +50,77 @@ func (s *GRPCServer) GetLoginPasswordObject(ctx context.Context, inputData *pb.D
 
 	return outputData, nil
 }
+
+// GetTextObject Returns text data for user
+func (s *GRPCServer) GetTextObject(ctx context.Context, inputData *pb.DataRequest) (*pb.TextData, error) {
+	userID, err := usecase.GetUserIDFromContext(ctx)
+	if err != nil {
+		zap.S().Error("error while getting user id from context", zap.Error(err))
+
+		if errors.Is(err, usecase.ErrEmptyMetadata) || errors.Is(err, usecase.ErrEmptyTokenValue) ||
+			errors.Is(err, crypto.ErrTokenNotValid) || errors.Is(err, crypto.ErrTokenExpired) {
+			return nil, status.Errorf(codes.PermissionDenied, err.Error())
+		}
+
+		return nil, status.Errorf(codes.Internal, InternalServerError)
+	}
+
+	dataName := converter.ConvertPbDataRequestToDataName(inputData)
+
+	ctx, cancel := context.WithTimeout(ctx, requestTimeout)
+	defer cancel()
+
+	data, err := s.storage.GetTextData(ctx, dataName, userID)
+	if err != nil {
+		if errors.Is(err, storage.ErrLoginPasswordDataNotFound) {
+			zap.S().Info("failed to get login-password for user from storage", zap.Error(err), zap.String("user_id", string(userID)))
+
+			return nil, status.Errorf(codes.NotFound, err.Error())
+		}
+
+		zap.S().Error("failed to get user from storage", zap.Error(err), zap.String("user_id", string(userID)))
+
+		return nil, status.Errorf(codes.Internal, InternalServerError)
+	}
+
+	outputData := converter.ConvertTextToPbText(data)
+
+	return outputData, nil
+}
+
+// GetTextObject Returns card data for user
+func (s *GRPCServer) GetCardObject(ctx context.Context, inputData *pb.DataRequest) (*pb.CardData, error) {
+	userID, err := usecase.GetUserIDFromContext(ctx)
+	if err != nil {
+		zap.S().Error("error while getting user id from context", zap.Error(err))
+
+		if errors.Is(err, usecase.ErrEmptyMetadata) || errors.Is(err, usecase.ErrEmptyTokenValue) ||
+			errors.Is(err, crypto.ErrTokenNotValid) || errors.Is(err, crypto.ErrTokenExpired) {
+			return nil, status.Errorf(codes.PermissionDenied, err.Error())
+		}
+
+		return nil, status.Errorf(codes.Internal, InternalServerError)
+	}
+
+	dataName := converter.ConvertPbDataRequestToDataName(inputData)
+
+	ctx, cancel := context.WithTimeout(ctx, requestTimeout)
+	defer cancel()
+
+	data, err := s.storage.GetCardData(ctx, dataName, userID)
+	if err != nil {
+		if errors.Is(err, storage.ErrLoginPasswordDataNotFound) {
+			zap.S().Info("failed to get login-password for user from storage", zap.Error(err), zap.String("user_id", string(userID)))
+
+			return nil, status.Errorf(codes.NotFound, err.Error())
+		}
+
+		zap.S().Error("failed to get user from storage", zap.Error(err), zap.String("user_id", string(userID)))
+
+		return nil, status.Errorf(codes.Internal, InternalServerError)
+	}
+
+	outputData := converter.ConvertCardToPbCard(data)
+
+	return outputData, nil
+}

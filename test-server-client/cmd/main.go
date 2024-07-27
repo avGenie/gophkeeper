@@ -46,12 +46,26 @@ func main() {
 	// 	log.Fatal(err)
 	// }
 
-	obj, err := client.GetLoginPasswordUser("google creds", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjIwNzk1OTksIlVzZXJJRCI6ImM5MjhjYTM4LWVkZDMtNGUxOS1iNDBiLTZhOTljMGExMWM0MCJ9.0t3U5_Rt5jImqO032M1vbMRWnxwTcy_nFFW0hzCcLiw")
+	loginPass, err := client.GetLoginPasswordUser("google creds", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjIwNzk1OTksIlVzZXJJRCI6ImM5MjhjYTM4LWVkZDMtNGUxOS1iNDBiLTZhOTljMGExMWM0MCJ9.0t3U5_Rt5jImqO032M1vbMRWnxwTcy_nFFW0hzCcLiw")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Println(obj)
+	fmt.Println(loginPass)
+
+	text, err := client.GetTextData("google text", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjIwNzk1OTksIlVzZXJJRCI6ImM5MjhjYTM4LWVkZDMtNGUxOS1iNDBiLTZhOTljMGExMWM0MCJ9.0t3U5_Rt5jImqO032M1vbMRWnxwTcy_nFFW0hzCcLiw")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(text)
+
+	card, err := client.GetCardData("card 1", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjIwNzk1OTksIlVzZXJJRCI6ImM5MjhjYTM4LWVkZDMtNGUxOS1iNDBiLTZhOTljMGExMWM0MCJ9.0t3U5_Rt5jImqO032M1vbMRWnxwTcy_nFFW0hzCcLiw")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(card)
 
 	client.Stop()
 }
