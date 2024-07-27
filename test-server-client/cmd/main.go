@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/avGenie/gophkeeper/test-server-client/internal/grpc"
@@ -21,15 +22,36 @@ func main() {
 
 	// log.Println(token)
 
-	// err = client.SaveLoginPasswordUser("google creds", "looogggin", "qwerty", "", token)
+	// err := client.SaveLoginPasswordUser("google creds", "looogggin", "qwerty", "", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjIwNzk1OTksIlVzZXJJRCI6ImM5MjhjYTM4LWVkZDMtNGUxOS1iNDBiLTZhOTljMGExMWM0MCJ9.0t3U5_Rt5jImqO032M1vbMRWnxwTcy_nFFW0hzCcLiw")
 	// if err != nil {
 	// 	log.Fatal(err)
 	// }
 
-	err := client.SaveText("google text", "tezxt adsad text", "", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjIwNzk1OTksIlVzZXJJRCI6ImM5MjhjYTM4LWVkZDMtNGUxOS1iNDBiLTZhOTljMGExMWM0MCJ9.0t3U5_Rt5jImqO032M1vbMRWnxwTcy_nFFW0hzCcLiw")
+	// err := client.SaveText("google text", "tezxt adsad text", "", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjIwNzk1OTksIlVzZXJJRCI6ImM5MjhjYTM4LWVkZDMtNGUxOS1iNDBiLTZhOTljMGExMWM0MCJ9.0t3U5_Rt5jImqO032M1vbMRWnxwTcy_nFFW0hzCcLiw")
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// err = client.SaveCard(
+	// 	"card 1",
+	// 	"111122223333",
+	// 	"",
+	// 	5,
+	// 	2030,
+	// 	444,
+	// 	"",
+	// 	"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjIwNzk1OTksIlVzZXJJRCI6ImM5MjhjYTM4LWVkZDMtNGUxOS1iNDBiLTZhOTljMGExMWM0MCJ9.0t3U5_Rt5jImqO032M1vbMRWnxwTcy_nFFW0hzCcLiw",
+	// )
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	obj, err := client.GetLoginPasswordUser("google creds", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjIwNzk1OTksIlVzZXJJRCI6ImM5MjhjYTM4LWVkZDMtNGUxOS1iNDBiLTZhOTljMGExMWM0MCJ9.0t3U5_Rt5jImqO032M1vbMRWnxwTcy_nFFW0hzCcLiw")
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	fmt.Println(obj)
 
 	client.Stop()
 }

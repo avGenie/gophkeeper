@@ -32,3 +32,16 @@ func (c *Client) SaveText(name, text, meta, token string) error {
 
 	return err
 }
+
+func (c *Client) SaveCard(name, number, cardholder string, expireMonth, expireYear, code int, meta, token string) error {
+	data := converter.CreatePbCardData(name, number, cardholder, expireMonth, expireYear, code, meta)
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	ctx = saveTokenToContext(ctx, token)
+
+	_, err := c.client.SaveCard(ctx, data)
+
+	return err
+}

@@ -11,3 +11,9 @@ func ValidateLoginPasswordData(data entity.LoginPassword) bool {
 func ValidateTextData(data entity.TextData) bool {
 	return data.Name != "" && data.Text != ""
 }
+
+// ValidateCardData Checks if name, text is not empty
+func ValidateCardData(data entity.CardData) bool {
+	return data.Name != "" && ValidateCardExpireMonth(data.ExpirationMonth) &&
+		ValidateCardExpireYear(data.ExpirationYear) && ValidateCardCode(data.Code)
+}

@@ -13,6 +13,13 @@ func ConvertPbMetadataToMetadata(data *pb.MetaData) entity.Metadata {
 	}
 }
 
+// ConvertMetadataToMetadataPb Converts app metadata to protobuf metadata
+func ConvertMetadataToMetadataPb(data entity.Metadata) *pb.MetaData {
+	return &pb.MetaData{
+		Data: data.Data,
+	}
+}
+
 // ConvertTokenToPbAuthToken Converts protobuf user creds to app user creds
 func ConvertPbUserCredentialsToUser(pbUser *pb.UserCredentials) entity.User {
 	return entity.User{
@@ -38,6 +45,16 @@ func ConvertPbLoginPasswordToLoginPassword(data *pb.LoginPasswordData) entity.Lo
 	}
 }
 
+// ConvertLoginPasswordDataToPbLoginPassword Converts app login-password data to protobuf login-password data
+func ConvertLoginPasswordDataToPbLoginPassword(data entity.LoginPassword) *pb.LoginPasswordData {
+	return &pb.LoginPasswordData{
+		Name:     data.Name,
+		Login:    data.Login,
+		Password: data.Password,
+		Meta: ConvertMetadataToMetadataPb(data.Metadata),
+	}
+}
+
 // ConvertPbTextToText Converts protobuf text data to app text data
 func ConvertPbTextToText(data *pb.TextData) entity.TextData {
 	return entity.TextData{
@@ -58,4 +75,8 @@ func ConvertPbCardToCard(data *pb.CardData) entity.CardData {
 		Cardholder:      data.GetCardholder(),
 		Metadata:        ConvertPbMetadataToMetadata(data.GetMeta()),
 	}
+}
+
+func ConvertPbDataRequestToDataName(data *pb.DataRequest) entity.DataName {
+	return entity.DataName(data.GetName())
 }
