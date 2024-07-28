@@ -2,6 +2,7 @@ package grpc
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/avGenie/gophkeeper/client/internal/config"
 	"github.com/avGenie/gophkeeper/client/internal/ui"
@@ -10,6 +11,10 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+)
+
+const (
+	requestTimeout = 5 * time.Second
 )
 
 type GRPCClient struct {
@@ -27,7 +32,7 @@ func NewClient(config config.Config) (*GRPCClient, error) {
 	client := &GRPCClient{
 		conn:   conn,
 		client: pb.NewGophkeeperClient(conn),
-	} 
+	}
 
 	client.ui = terminal.NewTerminal(client)
 
@@ -35,10 +40,10 @@ func NewClient(config config.Config) (*GRPCClient, error) {
 }
 
 func (c *GRPCClient) Start() {
-	
+
 	err := c.ui.Login()
 	if err != nil {
-		zap.S().Fatal("incorrect login credentials")
+		zap.S().Fatal("failed to login", zap.Error(err))
 	}
 
 	c.ui.Menu()
