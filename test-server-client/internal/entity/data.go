@@ -9,6 +9,8 @@ const (
 	DataRequestInvalid
 )
 
+type LoginPasswordObjects []LoginPassword
+
 type LoginPassword struct {
 	Name     string
 	Login    string

@@ -32,6 +32,33 @@ func (p *Postgres) GetLoginPasswordData(ctx context.Context, name entity.DataNam
 	return outData, nil
 }
 
+// GetLoginPasswordObjects Returns array of login-password data from postgres storage for user
+func (p *Postgres) GetLoginPasswordObjects(ctx context.Context, userID entity.UserID) (entity.LoginPasswordObjs, error) {
+	query := `SELECT name, login, password, meta FROM login_password_data WHERE user_login=$1`
+
+	rows, err := p.pool.Query(ctx, query, userID)
+	if err != nil {
+		return nil, fmt.Errorf("error in postgres request execution while getting login-password data: %w", err)
+	}
+
+	if rows.Err() != nil {
+		return nil, fmt.Errorf("error in postgres requested rows while getting login-password data: %w", rows.Err())
+	}
+
+	var outData entity.LoginPasswordObjs
+	for rows.Next() {
+		var data entity.LoginPassword
+		err = rows.Scan(&data.Name, &data.Login, &data.Password, &data.Metadata.Data)
+		if err != nil {
+			return nil, fmt.Errorf("error while processing response row in postgres: %w", err)
+		}
+
+		outData = append(outData, data)
+	}
+
+	return outData, nil
+}
+
 // GetTextData Returns text data from postgres storage for user
 func (p *Postgres) GetTextData(ctx context.Context, name entity.DataName, userID entity.UserID) (entity.TextData, error) {
 	query := `SELECT name, text, meta FROM text_data WHERE user_login=$1 AND name=$2`

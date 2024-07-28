@@ -63,6 +63,18 @@ func ConvertPbLoginPasswordDataToLoginPassword(data *pb.LoginPasswordData) entit
 	}
 }
 
+func ConvertPbLoginPasswordObjectsToLoginPasswordObjects(data *pb.LoginPasswordObjects) entity.LoginPasswordObjects {
+	var output entity.LoginPasswordObjects
+
+	for _, obj := range data.Objects {
+		outputObj := ConvertPbLoginPasswordDataToLoginPassword(obj)
+
+		output = append(output, outputObj)
+	}
+
+	return output
+}
+
 func ConvertPbTextDataToText(data *pb.TextData) entity.TextData {
 	return entity.TextData{
 		Name:     data.GetName(),

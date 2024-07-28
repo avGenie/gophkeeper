@@ -6,6 +6,7 @@ import (
 
 	"github.com/avGenie/gophkeeper/test-server-client/internal/converter"
 	"github.com/avGenie/gophkeeper/test-server-client/internal/entity"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 func (c *Client) GetLoginPasswordUser(name, token string) (entity.LoginPassword, error) {
@@ -22,6 +23,20 @@ func (c *Client) GetLoginPasswordUser(name, token string) (entity.LoginPassword,
 	}
 
 	return converter.ConvertPbLoginPasswordDataToLoginPassword(obj), nil
+}
+
+func (c *Client) GetLoginPasswordObjects(token string) (entity.LoginPasswordObjects, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	ctx = saveTokenToContext(ctx, token)
+
+	obj, err := c.client.GetLoginPasswordObjects(ctx, &emptypb.Empty{})
+	if err != nil {
+		return entity.LoginPasswordObjects{}, err
+	}
+
+	return converter.ConvertPbLoginPasswordObjectsToLoginPasswordObjects(obj), nil
 }
 
 func (c *Client) GetTextData(name, token string) (entity.TextData, error) {

@@ -18,6 +18,7 @@ type Storage interface {
 	SaveCardData(ctx context.Context, data entity.CardData, userID entity.UserID) error
 
 	GetLoginPasswordData(ctx context.Context, name entity.DataName, userID entity.UserID) (entity.LoginPassword, error)
+	GetLoginPasswordObjects(ctx context.Context, userID entity.UserID) (entity.LoginPasswordObjs, error)
 	GetTextData(ctx context.Context, name entity.DataName, userID entity.UserID) (entity.TextData, error)
 	GetCardData(ctx context.Context, name entity.DataName, userID entity.UserID) (entity.CardData, error)
 

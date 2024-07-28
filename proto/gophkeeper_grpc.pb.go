@@ -27,6 +27,7 @@ type GophkeeperClient interface {
 	SaveBinary(ctx context.Context, in *BinaryData, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetListData(ctx context.Context, in *DataGetterRequest, opts ...grpc.CallOption) (*DataListResponse, error)
 	GetLoginPasswordObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*LoginPasswordData, error)
+	GetLoginPasswordObjects(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*LoginPasswordObjects, error)
 	GetCardObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*CardData, error)
 	GetTextObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*TextData, error)
 	GetBinaryObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*BinaryData, error)
@@ -117,6 +118,15 @@ func (c *gophkeeperClient) GetLoginPasswordObject(ctx context.Context, in *DataR
 	return out, nil
 }
 
+func (c *gophkeeperClient) GetLoginPasswordObjects(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*LoginPasswordObjects, error) {
+	out := new(LoginPasswordObjects)
+	err := c.cc.Invoke(ctx, "/shortener.Gophkeeper/GetLoginPasswordObjects", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *gophkeeperClient) GetCardObject(ctx context.Context, in *DataRequest, opts ...grpc.CallOption) (*CardData, error) {
 	out := new(CardData)
 	err := c.cc.Invoke(ctx, "/shortener.Gophkeeper/GetCardObject", in, out, opts...)
@@ -201,6 +211,7 @@ type GophkeeperServer interface {
 	SaveBinary(context.Context, *BinaryData) (*emptypb.Empty, error)
 	GetListData(context.Context, *DataGetterRequest) (*DataListResponse, error)
 	GetLoginPasswordObject(context.Context, *DataRequest) (*LoginPasswordData, error)
+	GetLoginPasswordObjects(context.Context, *emptypb.Empty) (*LoginPasswordObjects, error)
 	GetCardObject(context.Context, *DataRequest) (*CardData, error)
 	GetTextObject(context.Context, *DataRequest) (*TextData, error)
 	GetBinaryObject(context.Context, *DataRequest) (*BinaryData, error)
@@ -239,6 +250,9 @@ func (UnimplementedGophkeeperServer) GetListData(context.Context, *DataGetterReq
 }
 func (UnimplementedGophkeeperServer) GetLoginPasswordObject(context.Context, *DataRequest) (*LoginPasswordData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLoginPasswordObject not implemented")
+}
+func (UnimplementedGophkeeperServer) GetLoginPasswordObjects(context.Context, *emptypb.Empty) (*LoginPasswordObjects, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLoginPasswordObjects not implemented")
 }
 func (UnimplementedGophkeeperServer) GetCardObject(context.Context, *DataRequest) (*CardData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCardObject not implemented")
@@ -417,6 +431,24 @@ func _Gophkeeper_GetLoginPasswordObject_Handler(srv interface{}, ctx context.Con
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GophkeeperServer).GetLoginPasswordObject(ctx, req.(*DataRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Gophkeeper_GetLoginPasswordObjects_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GophkeeperServer).GetLoginPasswordObjects(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/shortener.Gophkeeper/GetLoginPasswordObjects",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GophkeeperServer).GetLoginPasswordObjects(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -603,6 +635,10 @@ var Gophkeeper_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetLoginPasswordObject",
 			Handler:    _Gophkeeper_GetLoginPasswordObject_Handler,
+		},
+		{
+			MethodName: "GetLoginPasswordObjects",
+			Handler:    _Gophkeeper_GetLoginPasswordObjects_Handler,
 		},
 		{
 			MethodName: "GetCardObject",

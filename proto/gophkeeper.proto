@@ -26,6 +26,10 @@ message LoginPasswordData {
     MetaData meta = 4;
 }
 
+message LoginPasswordObjects {
+    repeated LoginPasswordData objects = 1;
+}
+
 message CardData {
     string name = 1;
     string Number = 2;
@@ -121,6 +125,7 @@ service Gophkeeper {
 
     rpc GetListData(DataGetterRequest) returns(DataListResponse);
     rpc GetLoginPasswordObject(DataRequest) returns(LoginPasswordData);
+    rpc GetLoginPasswordObjects(google.protobuf.Empty) returns(LoginPasswordObjects);
     rpc GetCardObject(DataRequest) returns(CardData);
     rpc GetTextObject(DataRequest) returns(TextData);
     rpc GetBinaryObject(DataRequest) returns(BinaryData);

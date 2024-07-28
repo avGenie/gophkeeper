@@ -55,6 +55,20 @@ func ConvertLoginPasswordDataToPbLoginPassword(data entity.LoginPassword) *pb.Lo
 	}
 }
 
+// ConvertLoginPasswordObjectsToPbLoginPasswordObject Converts app login-password objects to protobuf login-password objects
+func ConvertLoginPasswordObjectsToPbLoginPasswordObject(data entity.LoginPasswordObjs) *pb.LoginPasswordObjects {
+	output := &pb.LoginPasswordObjects{
+		Objects: make([]*pb.LoginPasswordData, 0, len(data)),
+	}
+
+	for _, obj := range data {
+		outputObj := ConvertLoginPasswordDataToPbLoginPassword(obj)
+
+		output.Objects = append(output.Objects, outputObj)
+	}
+	return output
+}
+
 // ConvertPbTextToText Converts protobuf text data to app text data
 func ConvertPbTextToText(data *pb.TextData) entity.TextData {
 	return entity.TextData{
