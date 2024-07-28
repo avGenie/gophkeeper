@@ -3,19 +3,16 @@ package main
 import (
 	"log"
 
-	"github.com/avGenie/gophkeeper/server/internal/app"
-	"github.com/avGenie/gophkeeper/server/internal/config"
+	"github.com/avGenie/gophkeeper/client/internal/app"
+	"github.com/avGenie/gophkeeper/client/internal/config"
 	"github.com/avGenie/gophkeeper/package/logger"
 	"go.uber.org/zap"
 )
 
 func main() {
-	config, err := config.NewConfig()
-	if err != nil {
-		log.Fatalf("create config error: %s", err)
-	}
+	config := config.NewConfig()
 
-	err = logger.Initialize(config.Server.LogLevel, "")
+	err := logger.Initialize(config.LogLevel, config.LogPath)
 	if err != nil {
 		log.Fatalf("initialize logger error: %s", err)
 	}

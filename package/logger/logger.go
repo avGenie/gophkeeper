@@ -1,19 +1,23 @@
 package logger
 
 import (
-	"github.com/avGenie/gophkeeper/server/internal/config"
 	"go.uber.org/zap"
 )
 
 // Initialize Initializes zap logger
-func Initialize(config config.Config) error {
-	lvl, err := zap.ParseAtomicLevel(config.Server.LogLevel)
+func Initialize(level, outputPath string) error {
+	lvl, err := zap.ParseAtomicLevel(level)
 	if err != nil {
 		return err
 	}
 
 	cfg := zap.NewProductionConfig()
 	cfg.Level = lvl
+
+	if outputPath != "" {
+		cfg.ErrorOutputPaths = []string{outputPath}
+		cfg.OutputPaths = []string{outputPath}
+	}
 
 	zl, err := cfg.Build()
 	if err != nil {
