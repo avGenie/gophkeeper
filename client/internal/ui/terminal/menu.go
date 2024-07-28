@@ -1,9 +1,39 @@
 package terminal
 
-import "fmt"
+import (
+	"fmt"
+)
+
+type MenuChoice int
+
+const (
+	Menu_Exit MenuChoice = iota
+	Menu_GetLoginPassword
+	Menu_GetText
+	Menu_GetCard
+	Menu_Add
+	Menu_Delete
+	Menu_Update
+)
 
 func (t *Terminal) Menu() {
+	var choice MenuChoice
 	t.menuMenu()
+	
+	fmt.Scan(&choice)
+
+	switch choice {
+	case Menu_GetLoginPassword:
+		t.getLoginPassword()
+
+	case Menu_Exit:
+		fmt.Fprintln(t.out, "Exitinig...")
+		return
+
+	default:
+		fmt.Fprintln(t.out, "Re-enter your choice!")
+		t.menuMenu()
+	}
 }
 
 func (t *Terminal) menuMenu() {

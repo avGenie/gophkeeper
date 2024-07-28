@@ -8,4 +8,6 @@ type GophkeeperClient interface {
 
 	RegisterUser(userCreds entity.User) error
 	AuthenticateUser(userCreds entity.User) (entity.Token, error)
+
+	GetLoginPasswordUser(name entity.ObjectName, token entity.Token) (entity.LoginPassword, error)
 }

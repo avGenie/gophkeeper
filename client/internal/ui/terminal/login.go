@@ -34,7 +34,6 @@ func (t *Terminal) Login() error {
 
 			if success {
 				fmt.Fprintln(t.out, "\n\nUser has been successfuly registered!")
-				t.loginMenu()
 			}
 
 		case Login_Auth:
@@ -55,8 +54,9 @@ func (t *Terminal) Login() error {
 
 		default:
 			fmt.Fprintln(t.out, "Re-enter your choice!")
-			t.loginMenu()
 		}
+
+		t.loginMenu()
 	}
 }
 
@@ -71,7 +71,7 @@ func (t *Terminal) enterLoginPassword() (entity.User, error) {
 	var loginPass entity.User
 
 	fmt.Fprint(t.out, "Username: ")
-	fmt.Fscan(t.in, &loginPass.Login)
+	loginPass.Login = t.scanText()
 
 	fmt.Fprint(t.out, "Password: ")
 	password, err := term.ReadPassword(int(t.in.Fd()))
