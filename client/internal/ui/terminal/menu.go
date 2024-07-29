@@ -22,7 +22,7 @@ func (t *Terminal) Menu() {
 
 	for {
 		fmt.Scan(&choice)
-		
+
 		switch choice {
 		case Menu_GetLoginPassword:
 			err := t.getLoginPassword()
@@ -32,6 +32,12 @@ func (t *Terminal) Menu() {
 
 		case Menu_GetText:
 			err := t.getText()
+			if err != nil {
+				return
+			}
+
+		case Menu_GetCard:
+			err := t.getCard()
 			if err != nil {
 				return
 			}

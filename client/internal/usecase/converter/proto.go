@@ -76,3 +76,29 @@ func ConvertPbTextObjectsToTextObject(data *pb.TextObjects) entity.TextObjects {
 
 	return output
 }
+
+// ConvertPbCardToCard Converts protobuf card data to app card data
+func ConvertPbCardToCard(data *pb.CardData) entity.CardData {
+	return entity.CardData{
+		Name:            data.GetName(),
+		Number:          data.GetNumber(),
+		ExpirationMonth: int(data.GetExpirationMonth()),
+		ExpirationYear:  int(data.GetExpirationYear()),
+		Code:            int(data.GetCode()),
+		Cardholder:      data.GetCardholder(),
+		Metadata:        ConvertPbMetadataToMetadata(data.GetMeta()),
+	}
+}
+
+// ConvertPbCardObjectsToCardObject Converts protobuf card objects to app card objects
+func ConvertPbCardObjectsToCardObject(data *pb.CardObjects) entity.CardObjects {
+	var output entity.CardObjects
+
+	for _, obj := range data.Objects {
+		outputObj := ConvertPbCardToCard(obj)
+
+		output = append(output, outputObj)
+	}
+
+	return output
+}
