@@ -40,16 +40,28 @@ message CardData {
     MetaData meta = 7;
 }
 
+message CardObjects {
+    repeated CardData objects = 1;
+}
+
 message TextData {
     string name = 1;
     string text = 2;
     MetaData meta = 3;
 }
 
+message TextObjects {
+    repeated TextData objects = 1;
+}
+
 message BinaryData {
     string name = 1;
     bytes data = 2;
     MetaData meta = 3;
+}
+
+message BinaryObjects {
+    repeated BinaryData objects = 1;
 }
 
 enum ErrorStatus {
@@ -72,8 +84,7 @@ enum DataType {
     Type_Card = 1;
     Type_Text = 2;
     Type_Binary = 3;
-    Type_All = 4;
-    Type_Invalid = 5;
+    Type_Invalid = 4;
 }
 
 message DataGetterRequest {
@@ -127,8 +138,11 @@ service Gophkeeper {
     rpc GetLoginPasswordObject(DataRequest) returns(LoginPasswordData);
     rpc GetLoginPasswordObjects(google.protobuf.Empty) returns(LoginPasswordObjects);
     rpc GetCardObject(DataRequest) returns(CardData);
+    rpc GetCardObjects(google.protobuf.Empty) returns(CardObjects);
     rpc GetTextObject(DataRequest) returns(TextData);
+    rpc GetTextObjects(google.protobuf.Empty) returns(TextObjects);
     rpc GetBinaryObject(DataRequest) returns(BinaryData);
+    rpc GetBinaryObjects(google.protobuf.Empty) returns(BinaryObjects);
 
     rpc UpdateLoginPassword(LoginPasswordData) returns(google.protobuf.Empty);
     rpc UpdateCard(CardData) returns(google.protobuf.Empty);

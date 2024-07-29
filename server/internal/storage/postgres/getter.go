@@ -38,11 +38,11 @@ func (p *Postgres) GetLoginPasswordObjects(ctx context.Context, userID entity.Us
 
 	rows, err := p.pool.Query(ctx, query, userID)
 	if err != nil {
-		return nil, fmt.Errorf("error in postgres request execution while getting login-password data: %w", err)
+		return nil, fmt.Errorf("error in postgres request execution while getting login-password objects: %w", err)
 	}
 
 	if rows.Err() != nil {
-		return nil, fmt.Errorf("error in postgres requested rows while getting login-password data: %w", rows.Err())
+		return nil, fmt.Errorf("error in postgres requested rows while getting login-password objects: %w", rows.Err())
 	}
 
 	var outData entity.LoginPasswordObjs
@@ -81,6 +81,33 @@ func (p *Postgres) GetTextData(ctx context.Context, name entity.DataName, userID
 	return outData, nil
 }
 
+// GetTextObjects Returns array of text data from postgres storage for user
+func (p *Postgres) GetTextObjects(ctx context.Context, userID entity.UserID) (entity.TextDataObjects, error) {
+	query := `SELECT name, text, meta FROM text_data WHERE user_login=$1`
+
+	rows, err := p.pool.Query(ctx, query, userID)
+	if err != nil {
+		return nil, fmt.Errorf("error in postgres request execution while getting text objects: %w", err)
+	}
+
+	if rows.Err() != nil {
+		return nil, fmt.Errorf("error in postgres requested rows while getting text objects: %w", rows.Err())
+	}
+
+	var outData entity.TextDataObjects
+	for rows.Next() {
+		var data entity.TextData
+		err = rows.Scan(&data.Name, &data.Text, &data.Metadata.Data)
+		if err != nil {
+			return nil, fmt.Errorf("error while processing response row in postgres: %w", err)
+		}
+
+		outData = append(outData, data)
+	}
+
+	return outData, nil
+}
+
 // GetCardData Returns card data from postgres storage for user
 func (p *Postgres) GetCardData(ctx context.Context, name entity.DataName, userID entity.UserID) (entity.CardData, error) {
 	query := `SELECT name, number, expiration_month, expiration_year, code, cardholder, meta FROM cards_data WHERE user_login=$1 AND name=$2`
@@ -98,6 +125,33 @@ func (p *Postgres) GetCardData(ctx context.Context, name entity.DataName, userID
 		}
 
 		return entity.CardData{}, fmt.Errorf("error while processing response row in postgres while getting login-password data: %w", err)
+	}
+
+	return outData, nil
+}
+
+// GetCardObjects Returns array of card data from postgres storage for user
+func (p *Postgres) GetCardObjects(ctx context.Context, userID entity.UserID) (entity.CardDataObjects, error) {
+	query := `SELECT name, number, expiration_month, expiration_year, code, cardholder, meta FROM cards_data WHERE user_login=$1`
+
+	rows, err := p.pool.Query(ctx, query, userID)
+	if err != nil {
+		return nil, fmt.Errorf("error in postgres request execution while getting data objects: %w", err)
+	}
+
+	if rows.Err() != nil {
+		return nil, fmt.Errorf("error in postgres requested rows while getting data objects: %w", rows.Err())
+	}
+
+	var outData entity.CardDataObjects
+	for rows.Next() {
+		var data entity.CardData
+		err = rows.Scan(&data.Name, &data.Number, &data.ExpirationMonth, &data.ExpirationYear, &data.Code, &data.Cardholder, &data.Metadata.Data)
+		if err != nil {
+			return nil, fmt.Errorf("error while processing response row in postgres: %w", err)
+		}
+
+		outData = append(outData, data)
 	}
 
 	return outData, nil

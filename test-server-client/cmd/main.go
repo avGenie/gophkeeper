@@ -51,6 +51,25 @@ func main() {
 	// 	log.Fatal(err)
 	// }
 
+	// err = client.SaveText("google text more", "textetxt", "", token)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// err = client.SaveCard(
+	// 	"card 2",
+	// 	"444422223333",
+	// 	"",
+	// 	6,
+	// 	2028,
+	// 	111,
+	// 	"",
+	// 	token,
+	// )
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
 	loginPass, err := client.GetLoginPasswordUser("google creds", token)
 	if err != nil {
 		log.Fatal(err)
@@ -65,19 +84,33 @@ func main() {
 
 	fmt.Println(loginPassObjs)
 
-	// text, err := client.GetTextData("google text", token)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
+	text, err := client.GetTextData("google text", token)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	// fmt.Println(text)
+	fmt.Println(text)
 
-	// card, err := client.GetCardData("card 1", token)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
+	textObjs, err := client.GetTextObjects(token)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	// fmt.Println(card)
+	fmt.Println(textObjs)
+
+	card, err := client.GetCardData("card 1", token)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(card)
+
+	cardObjs, err := client.GetCardObjects(token)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(cardObjs)
 
 	// err = client.DeleteDataObject(entity.DataRequestLoginPassword, "google creds", token)
 	// if err != nil {

@@ -55,6 +55,20 @@ func (c *Client) GetTextData(name, token string) (entity.TextData, error) {
 	return converter.ConvertPbTextDataToText(obj), nil
 }
 
+func (c *Client) GetTextObjects(token string) (entity.TextObjects, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	ctx = saveTokenToContext(ctx, token)
+
+	obj, err := c.client.GetTextObjects(ctx, &emptypb.Empty{})
+	if err != nil {
+		return entity.TextObjects{}, err
+	}
+
+	return converter.ConvertPbTextObjectsToTextObjects(obj), nil
+}
+
 func (c *Client) GetCardData(name, token string) (entity.CardData, error) {
 	dataRequest := converter.CreatePbDataRequest(name)
 
@@ -69,4 +83,18 @@ func (c *Client) GetCardData(name, token string) (entity.CardData, error) {
 	}
 
 	return converter.ConvertPbCardDataToCard(obj), nil
+}
+
+func (c *Client) GetCardObjects(token string) (entity.CardObjects, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	ctx = saveTokenToContext(ctx, token)
+
+	obj, err := c.client.GetCardObjects(ctx, &emptypb.Empty{})
+	if err != nil {
+		return entity.CardObjects{}, err
+	}
+
+	return converter.ConvertPbCardObjectsToCardObjects(obj), nil
 }

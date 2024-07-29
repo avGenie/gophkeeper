@@ -87,6 +87,20 @@ func ConvertTextToPbText(data entity.TextData) *pb.TextData {
 	}
 }
 
+// ConvertTextObjectsToPbTextObject Converts app text objects to protobuf text objects
+func ConvertTextObjectsToPbTextObject(data entity.TextDataObjects) *pb.TextObjects {
+	output := &pb.TextObjects{
+		Objects: make([]*pb.TextData, 0, len(data)),
+	}
+
+	for _, obj := range data {
+		outputObj := ConvertTextToPbText(obj)
+
+		output.Objects = append(output.Objects, outputObj)
+	}
+	return output
+}
+
 // ConvertPbCardToCard Converts protobuf card data to app card data
 func ConvertPbCardToCard(data *pb.CardData) entity.CardData {
 	return entity.CardData{
@@ -111,6 +125,20 @@ func ConvertCardToPbCard(data entity.CardData) *pb.CardData {
 		Cardholder:      data.Cardholder,
 		Meta:            ConvertMetadataToMetadataPb(data.Metadata),
 	}
+}
+
+// ConvertCardObjectsToPbCardObject Converts app card objects to protobuf card objects
+func ConvertCardObjectsToPbCardObject(data entity.CardDataObjects) *pb.CardObjects {
+	output := &pb.CardObjects{
+		Objects: make([]*pb.CardData, 0, len(data)),
+	}
+
+	for _, obj := range data {
+		outputObj := ConvertCardToPbCard(obj)
+
+		output.Objects = append(output.Objects, outputObj)
+	}
+	return output
 }
 
 // ConvertPbDataRequestToDataName Converts protobuf data request to app data name

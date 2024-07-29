@@ -83,6 +83,18 @@ func ConvertPbTextDataToText(data *pb.TextData) entity.TextData {
 	}
 }
 
+func ConvertPbTextObjectsToTextObjects(data *pb.TextObjects) entity.TextObjects {
+	var output entity.TextObjects
+
+	for _, obj := range data.Objects {
+		outputObj := ConvertPbTextDataToText(obj)
+
+		output = append(output, outputObj)
+	}
+
+	return output
+}
+
 func ConvertPbCardDataToCard(data *pb.CardData) entity.CardData {
 	return entity.CardData{
 		Name:            data.GetName(),
@@ -93,6 +105,18 @@ func ConvertPbCardDataToCard(data *pb.CardData) entity.CardData {
 		Cardholder:      data.GetCardholder(),
 		Metadata:        data.GetMeta().Data,
 	}
+}
+
+func ConvertPbCardObjectsToCardObjects(data *pb.CardObjects) entity.CardObjects {
+	var output entity.CardObjects
+
+	for _, obj := range data.Objects {
+		outputObj := ConvertPbCardDataToCard(obj)
+
+		output = append(output, outputObj)
+	}
+
+	return output
 }
 
 func ConvertDataRequestTypeToPbDataType(requestType entity.DataRequestType) pb.DataType {

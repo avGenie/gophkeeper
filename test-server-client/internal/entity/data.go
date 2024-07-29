@@ -18,11 +18,15 @@ type LoginPassword struct {
 	Metadata string
 }
 
+type TextObjects []TextData
+
 type TextData struct {
 	Name     string
 	Text     string
 	Metadata string
 }
+
+type CardObjects []CardData
 
 type CardData struct {
 	Name            string

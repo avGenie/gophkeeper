@@ -1,5 +1,8 @@
 package entity
 
+// CardDataObjects Array of CardData objects
+type CardDataObjects []CardData
+
 // CardData Contains bank card data as data content
 type CardData struct {
 	Name            string
