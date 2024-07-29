@@ -13,7 +13,8 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
-func (c *GRPCClient) GetLoginPasswordUser(name entity.ObjectName, token entity.Token) (entity.LoginPassword, error) {
+// GetLoginPasswordData Returns login-password data for user
+func (c *GRPCClient) GetLoginPasswordData(name entity.ObjectName, token entity.Token) (entity.LoginPassword, error) {
 	dataRequest := converter.ConvertObjectNameToPbDataRequest(name)
 
 	ctx, cancel := context.WithTimeout(context.Background(), requestTimeout)
@@ -37,6 +38,7 @@ func (c *GRPCClient) GetLoginPasswordUser(name entity.ObjectName, token entity.T
 	return converter.ConvertPbLoginPasswordDataToLoginPasswordData(data), nil
 }
 
+// GetLoginPasswordObjects Returns login-password objects for user
 func (c *GRPCClient) GetLoginPasswordObjects(token entity.Token) (entity.LoginPasswordObjects, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), requestTimeout)
 	defer cancel()
@@ -57,4 +59,52 @@ func (c *GRPCClient) GetLoginPasswordObjects(token entity.Token) (entity.LoginPa
 	}
 
 	return converter.ConvertPbLoginPasswordObjectsToLoginPasswordObjects(obj), nil
+}
+
+// GetTextUser Returns text data for user
+func (c *GRPCClient) GetTextData(name entity.ObjectName, token entity.Token) (entity.TextData, error) {
+	dataRequest := converter.ConvertObjectNameToPbDataRequest(name)
+
+	ctx, cancel := context.WithTimeout(context.Background(), requestTimeout)
+	defer cancel()
+
+	ctx = client_context.SaveTokenToContext(ctx, token)
+
+	data, err := c.client.GetTextObject(ctx, dataRequest)
+	if err != nil {
+		if status.Code(err) == codes.PermissionDenied {
+			return entity.TextData{}, controller.ErrUserPermissionDenied
+		}
+
+		if status.Code(err) == codes.NotFound {
+			return entity.TextData{}, controller.ErrDataNotFound
+		}
+
+		return entity.TextData{}, fmt.Errorf("failed to get text data: %w", err)
+	}
+
+	return converter.ConvertPbTextToText(data), nil
+}
+
+// GetTextObjects Returns text objects for user
+func (c *GRPCClient) GetTextObjects(token entity.Token) (entity.TextObjects, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), requestTimeout)
+	defer cancel()
+
+	ctx = client_context.SaveTokenToContext(ctx, token)
+
+	obj, err := c.client.GetTextObjects(ctx, &emptypb.Empty{})
+	if err != nil {
+		if status.Code(err) == codes.PermissionDenied {
+			return entity.TextObjects{}, controller.ErrUserPermissionDenied
+		}
+
+		if status.Code(err) == codes.NotFound {
+			return entity.TextObjects{}, controller.ErrDataNotFound
+		}
+
+		return entity.TextObjects{}, fmt.Errorf("failed to get login-password objects: %w", err)
+	}
+
+	return converter.ConvertPbTextObjectsToTextObject(obj), nil
 }

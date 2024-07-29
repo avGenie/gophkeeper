@@ -5,6 +5,7 @@ import (
 	pb "github.com/avGenie/gophkeeper/proto"
 )
 
+// ConvertUserCredentialsToPbUserCredentials Converts protobuf user data to app user credentials
 func ConvertUserCredentialsToPbUserCredentials(data entity.User) *pb.UserCredentials {
 	return &pb.UserCredentials{
 		Login:    data.Login,
@@ -12,10 +13,12 @@ func ConvertUserCredentialsToPbUserCredentials(data entity.User) *pb.UserCredent
 	}
 }
 
+// ConvertPbAuthTokenToToken Converts protobuf auth token to app user token
 func ConvertPbAuthTokenToToken(data *pb.AuthorizationToken) entity.Token {
 	return entity.Token(data.Token)
 }
 
+// ConvertObjectNameToPbDataRequest Converts protobuf object name to app data request
 func ConvertObjectNameToPbDataRequest(data entity.ObjectName) *pb.DataRequest {
 	return &pb.DataRequest{
 		Name: string(data),
@@ -29,6 +32,7 @@ func ConvertPbMetadataToMetadata(data *pb.MetaData) entity.Metadata {
 	}
 }
 
+// ConvertPbLoginPasswordDataToLoginPasswordData Converts protobuf login-password data to app login-password data
 func ConvertPbLoginPasswordDataToLoginPasswordData(data *pb.LoginPasswordData) entity.LoginPassword {
 	return entity.LoginPassword{
 		Name:     data.GetName(),
@@ -38,20 +42,34 @@ func ConvertPbLoginPasswordDataToLoginPasswordData(data *pb.LoginPasswordData) e
 	}
 }
 
-func ConvertPbLoginPasswordDataToLoginPassword(data *pb.LoginPasswordData) entity.LoginPassword {
-	return entity.LoginPassword{
-		Name:     data.GetName(),
-		Login:    data.GetLogin(),
-		Password: data.GetPassword(),
-		Metadata: ConvertPbMetadataToMetadata(data.GetMeta()),
-	}
-}
-
+// ConvertPbLoginPasswordObjectsToLoginPasswordObjects Converts protobuf login-password objects to app login-password objects
 func ConvertPbLoginPasswordObjectsToLoginPasswordObjects(data *pb.LoginPasswordObjects) entity.LoginPasswordObjects {
 	var output entity.LoginPasswordObjects
 
 	for _, obj := range data.Objects {
-		outputObj := ConvertPbLoginPasswordDataToLoginPassword(obj)
+		outputObj := ConvertPbLoginPasswordDataToLoginPasswordData(obj)
+
+		output = append(output, outputObj)
+	}
+
+	return output
+}
+
+// ConvertPbTextToText Converts protobuf text data to app text data
+func ConvertPbTextToText(data *pb.TextData) entity.TextData {
+	return entity.TextData{
+		Name:     data.GetName(),
+		Text:     data.GetText(),
+		Metadata: ConvertPbMetadataToMetadata(data.GetMeta()),
+	}
+}
+
+// ConvertPbTextObjectsToTextObject Converts protobuf text objects to app text objects
+func ConvertPbTextObjectsToTextObject(data *pb.TextObjects) entity.TextObjects {
+	var output entity.TextObjects
+
+	for _, obj := range data.Objects {
+		outputObj := ConvertPbTextToText(obj)
 
 		output = append(output, outputObj)
 	}

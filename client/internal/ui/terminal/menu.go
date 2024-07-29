@@ -19,19 +19,32 @@ const (
 func (t *Terminal) Menu() {
 	var choice MenuChoice
 	t.menuMenu()
-	
-	fmt.Scan(&choice)
 
-	switch choice {
-	case Menu_GetLoginPassword:
-		t.getLoginPassword()
+	for {
+		fmt.Scan(&choice)
+		
+		switch choice {
+		case Menu_GetLoginPassword:
+			err := t.getLoginPassword()
+			if err != nil {
+				return
+			}
 
-	case Menu_Exit:
-		fmt.Fprintln(t.out, "Exitinig...")
-		return
+		case Menu_GetText:
+			err := t.getText()
+			if err != nil {
+				return
+			}
 
-	default:
-		fmt.Fprintln(t.out, ChoiceReenterChoice)
+		case Menu_Exit:
+			fmt.Fprintln(t.out, Exiting)
+
+			return
+
+		default:
+			fmt.Fprintln(t.out, ChoiceReenterChoice)
+		}
+
 		t.menuMenu()
 	}
 }
@@ -45,4 +58,5 @@ func (t *Terminal) menuMenu() {
 	fmt.Fprintln(t.out, "6. Update")
 	fmt.Fprintln(t.out, ChoiceExit)
 	fmt.Fprint(t.out, ChoiceEnterChoice)
+	fmt.Fprintln(t.out, "")
 }

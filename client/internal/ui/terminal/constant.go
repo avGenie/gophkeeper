@@ -1,14 +1,14 @@
 package terminal
 
 const (
-	Exiting = "Exiting..."
+	Exiting = "\tExiting..."
 
 	ChoiceBack = "0. Back"
 	ChoiceExit = "0. Exit"
-	ChoiceReenterChoice = "Re-enter your choice!"
+	ChoiceReenterChoice = "\tRe-enter your choice!"
 	ChoiceEnterChoice = "Enter your choice: "
 
-	UnexpectedError = "!!! Unexpected error. Please, contact your administrator. !!!"
-	PermissionDenied = "Permission denied. Please, login again."
-	DataNotFound = "Requested data not found."
+	UnexpectedError = "\t!!! Unexpected error. Please, contact your administrator. !!!"
+	PermissionDenied = "\tPermission denied. Please, login again."
+	DataNotFound = "\tRequested data not found."
 )

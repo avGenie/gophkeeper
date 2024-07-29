@@ -9,43 +9,39 @@ import (
 	"go.uber.org/zap"
 )
 
-type LoginPasswordChoice int
+type TextChoice int
 
 const (
-	LoginPassword_Exit LoginPasswordChoice = iota
-	LoginPassword_GetByName
-	LoginPassword_GetAll
+	Text_Exit TextChoice = iota
+	Text_GetByName
+	Text_GetAll
 )
 
-func (t *Terminal) getLoginPassword() error {
-	var choice LoginPasswordChoice
-	t.menuLoginPassword()
+func (t *Terminal) getText() error {
+	var choice TextChoice
+	t.menuText()
 
 	for {
 		fmt.Scan(&choice)
 
 		switch choice {
-		case LoginPassword_GetByName:
-			err := t.loginPasswordGetByName()
+		case Text_GetByName:
+			err := t.textGetByName()
 			if err != nil {
 				fmt.Fprintln(t.out, Exiting)
 
 				return err
 			}
 
-			t.getLoginPassword()
-
-		case LoginPassword_GetAll:
-			err := t.loginPasswordGetAll()
+		case Text_GetAll:
+			err := t.textGetAll()
 			if err != nil {
 				fmt.Fprintln(t.out, Exiting)
 
 				return err
 			}
 
-			t.getLoginPassword()
-
-		case LoginPassword_Exit:
+		case Text_Exit:
 			fmt.Fprintln(t.out, Exiting)
 
 			return nil
@@ -54,19 +50,19 @@ func (t *Terminal) getLoginPassword() error {
 			fmt.Fprintln(t.out, ChoiceReenterChoice)
 		}
 
-		t.menuLoginPassword()
+		t.menuText()
 	}
 }
 
-func (t *Terminal) menuLoginPassword() {
+func (t *Terminal) menuText() {
 	t.menuGetItems()
 }
 
-func (t *Terminal) loginPasswordGetByName() error {
+func (t *Terminal) textGetByName() error {
 	fmt.Fprint(t.out, "Object name: ")
 	name := entity.ObjectName(t.scanText())
 
-	data, err := t.client.GetLoginPasswordData(name, t.userToken)
+	data, err := t.client.GetTextData(name, t.userToken)
 	if err != nil {
 		if errors.Is(err, controller.ErrUserPermissionDenied) {
 			fmt.Fprintln(t.out, PermissionDenied)
@@ -80,19 +76,19 @@ func (t *Terminal) loginPasswordGetByName() error {
 			return nil
 		}
 
-		zap.S().Error("failed to get login-password data object", zap.Error(err))
+		zap.S().Error("failed to get text data object", zap.Error(err))
 		fmt.Fprintln(t.out, UnexpectedError)
 
 		return errExit
 	}
 
-	t.printLoginPasswordData(data)
+	t.printTextData(data)
 
 	return nil
 }
 
-func (t *Terminal) loginPasswordGetAll() error {
-	data, err := t.client.GetLoginPasswordObjects(t.userToken)
+func (t *Terminal) textGetAll() error {
+	data, err := t.client.GetTextObjects(t.userToken)
 	if err != nil {
 		if errors.Is(err, controller.ErrUserPermissionDenied) {
 			fmt.Fprintln(t.out, PermissionDenied)
@@ -106,27 +102,26 @@ func (t *Terminal) loginPasswordGetAll() error {
 			return nil
 		}
 
-		zap.S().Error("failed to get all login-password data", zap.Error(err))
+		zap.S().Error("failed to get all text data", zap.Error(err))
 		fmt.Fprintln(t.out, UnexpectedError)
 
 		return errExit
 	}
 
-	t.printLoginPasswordObjects(data)
+	t.printTextObjects(data)
 
 	return nil
 }
 
-func (t *Terminal) printLoginPasswordData(data entity.LoginPassword) {
+func (t *Terminal) printTextData(data entity.TextData) {
 	fmt.Fprintf(t.out, "\t    Name: %s\n", data.Name)
-	fmt.Fprintf(t.out, "\t   Login: %s\n", data.Login)
-	fmt.Fprintf(t.out, "\tPassword: %s\n", data.Password)
+	fmt.Fprintf(t.out, "\t    Text: %s\n", data.Text)
 	fmt.Fprintf(t.out, "\tMetadata: %s\n", data.Metadata.Data)
 }
 
-func (t *Terminal) printLoginPasswordObjects(data entity.LoginPasswordObjects) {
+func (t *Terminal) printTextObjects(data entity.TextObjects) {
 	for _, object := range data {
-		t.printLoginPasswordData(object)
+		t.printTextData(object)
 		fmt.Fprintf(t.out, "\n")
 	}
 }
