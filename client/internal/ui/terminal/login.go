@@ -49,11 +49,11 @@ func (t *Terminal) Login() error {
 			}
 
 		case Login_Exit:
-			fmt.Fprintln(t.out, "Exitinig...")
+			fmt.Fprintln(t.out, Exiting)
 			return ui.ErrExit
 
 		default:
-			fmt.Fprintln(t.out, "Re-enter your choice!")
+			fmt.Fprintln(t.out, ChoiceReenterChoice)
 		}
 
 		t.loginMenu()
@@ -63,8 +63,8 @@ func (t *Terminal) Login() error {
 func (t *Terminal) loginMenu() {
 	fmt.Fprintln(t.out, "1. Registration")
 	fmt.Fprintln(t.out, "2. Authentication")
-	fmt.Fprintln(t.out, "0. Exit")
-	fmt.Fprint(t.out, "Enter your choice: ")
+	fmt.Fprintln(t.out, ChoiceExit)
+	fmt.Fprint(t.out, ChoiceEnterChoice)
 }
 
 func (t *Terminal) enterLoginPassword() (entity.User, error) {
@@ -108,7 +108,7 @@ func (t *Terminal) register() (bool, error) {
 		}
 
 		zap.S().Error("failed to register user", zap.Error(err), zap.String("user_login", creds.Login))
-		fmt.Fprintln(t.out, "!!! Unexpected error. Please, contact your administrator. !!!")
+		fmt.Fprintln(t.out, UnexpectedError)
 
 		return false, fmt.Errorf("couldn't register user: %w", err)
 	}
@@ -140,7 +140,7 @@ func (t *Terminal) authenticate() (bool, error) {
 		}
 
 		zap.S().Error("failed to authenticate user", zap.Error(err), zap.String("user_login", creds.Login))
-		fmt.Fprintln(t.out, "!!! Unexpected error. Please, contact your administrator. !!!")
+		fmt.Fprintln(t.out, UnexpectedError)
 
 		return false, fmt.Errorf("couldn't authenticate user: %w", err)
 	}

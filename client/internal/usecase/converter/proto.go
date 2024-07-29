@@ -7,7 +7,7 @@ import (
 
 func ConvertUserCredentialsToPbUserCredentials(data entity.User) *pb.UserCredentials {
 	return &pb.UserCredentials{
-		Login: data.Login,
+		Login:    data.Login,
 		Password: data.Password,
 	}
 }
@@ -22,6 +22,7 @@ func ConvertObjectNameToPbDataRequest(data entity.ObjectName) *pb.DataRequest {
 	}
 }
 
+// ConvertPbMetadataToMetadata Converts protobuf metadata to app metadata
 func ConvertPbMetadataToMetadata(data *pb.MetaData) entity.Metadata {
 	return entity.Metadata{
 		Data: data.GetData(),
@@ -30,9 +31,30 @@ func ConvertPbMetadataToMetadata(data *pb.MetaData) entity.Metadata {
 
 func ConvertPbLoginPasswordDataToLoginPasswordData(data *pb.LoginPasswordData) entity.LoginPassword {
 	return entity.LoginPassword{
-		Name: data.GetName(),
-		Login: data.GetLogin(),
+		Name:     data.GetName(),
+		Login:    data.GetLogin(),
 		Password: data.GetPassword(),
 		Metadata: ConvertPbMetadataToMetadata(data.GetMeta()),
 	}
+}
+
+func ConvertPbLoginPasswordDataToLoginPassword(data *pb.LoginPasswordData) entity.LoginPassword {
+	return entity.LoginPassword{
+		Name:     data.GetName(),
+		Login:    data.GetLogin(),
+		Password: data.GetPassword(),
+		Metadata: ConvertPbMetadataToMetadata(data.GetMeta()),
+	}
+}
+
+func ConvertPbLoginPasswordObjectsToLoginPasswordObjects(data *pb.LoginPasswordObjects) entity.LoginPasswordObjects {
+	var output entity.LoginPasswordObjects
+
+	for _, obj := range data.Objects {
+		outputObj := ConvertPbLoginPasswordDataToLoginPassword(obj)
+
+		output = append(output, outputObj)
+	}
+
+	return output
 }

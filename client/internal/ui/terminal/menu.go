@@ -31,7 +31,7 @@ func (t *Terminal) Menu() {
 		return
 
 	default:
-		fmt.Fprintln(t.out, "Re-enter your choice!")
+		fmt.Fprintln(t.out, ChoiceReenterChoice)
 		t.menuMenu()
 	}
 }
@@ -43,6 +43,6 @@ func (t *Terminal) menuMenu() {
 	fmt.Fprintln(t.out, "4. Add")
 	fmt.Fprintln(t.out, "5. Delete")
 	fmt.Fprintln(t.out, "6. Update")
-	fmt.Fprintln(t.out, "0. Exit")
-	fmt.Fprint(t.out, "Enter your choice: ")
+	fmt.Fprintln(t.out, ChoiceExit)
+	fmt.Fprint(t.out, ChoiceEnterChoice)
 }

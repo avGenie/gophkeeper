@@ -10,4 +10,5 @@ type GophkeeperClient interface {
 	AuthenticateUser(userCreds entity.User) (entity.Token, error)
 
 	GetLoginPasswordUser(name entity.ObjectName, token entity.Token) (entity.LoginPassword, error)
+	GetLoginPasswordObjects(token entity.Token) (entity.LoginPasswordObjects, error)
 }
