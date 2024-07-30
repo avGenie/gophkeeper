@@ -8,4 +8,5 @@ var (
 	ErrUserInvalid          = fmt.Errorf("invalid input user credentials")
 	ErrUserPermissionDenied = fmt.Errorf("permission denied")
 	ErrDataNotFound         = fmt.Errorf("requested data not found")
+	ErrDataDeleteWrongName  = fmt.Errorf("object with this name is not found")
 )

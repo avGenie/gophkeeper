@@ -42,6 +42,12 @@ func (t *Terminal) Menu() {
 				return
 			}
 
+		case Menu_Delete:
+			err := t.delete()
+			if err != nil {
+				return
+			}
+
 		case Menu_Exit:
 			fmt.Fprintln(t.out, Exiting)
 

@@ -156,12 +156,12 @@ func ConvertPbDataGetterRequestToDataRequest(data *pb.DataGetterRequest) entity.
 
 // ConvertPbDataTypeToDataRequestType Converts protobuf data type to app data request type
 func ConvertPbDataTypeToDataRequestType(data pb.DataType) entity.DataRequestType {
-	switch data.Type() {
-	case pb.DataType_Type_LoginPassword.Type():
+	switch data {
+	case pb.DataType_Type_LoginPassword:
 		return entity.DataRequestLoginPassword
-	case pb.DataType_Type_Text.Type():
+	case pb.DataType_Type_Text:
 		return entity.DataRequestText
-	case pb.DataType_Type_Card.Type():
+	case pb.DataType_Type_Card:
 		return entity.DataRequestCard
 	default:
 		return entity.DataRequestInvalid

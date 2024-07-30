@@ -65,7 +65,7 @@ func (p *Postgres) GetTextData(ctx context.Context, name entity.DataName, userID
 
 	row := p.pool.QueryRow(ctx, query, userID, name)
 	if row == nil {
-		return entity.TextData{}, fmt.Errorf("%s while getting login-password data", queryRowMessage)
+		return entity.TextData{}, fmt.Errorf("%s while getting text data", queryRowMessage)
 	}
 
 	var outData entity.TextData
@@ -75,7 +75,7 @@ func (p *Postgres) GetTextData(ctx context.Context, name entity.DataName, userID
 			return entity.TextData{}, storage.ErrLoginPasswordDataNotFound
 		}
 
-		return entity.TextData{}, fmt.Errorf("error while processing response row in postgres while getting login-password data: %w", err)
+		return entity.TextData{}, fmt.Errorf("error while processing response row in postgres while getting text data: %w", err)
 	}
 
 	return outData, nil
@@ -114,7 +114,7 @@ func (p *Postgres) GetCardData(ctx context.Context, name entity.DataName, userID
 
 	row := p.pool.QueryRow(ctx, query, userID, name)
 	if row == nil {
-		return entity.CardData{}, fmt.Errorf("%s while getting login-password data", queryRowMessage)
+		return entity.CardData{}, fmt.Errorf("%s while getting card data", queryRowMessage)
 	}
 
 	var outData entity.CardData
@@ -124,7 +124,7 @@ func (p *Postgres) GetCardData(ctx context.Context, name entity.DataName, userID
 			return entity.CardData{}, storage.ErrLoginPasswordDataNotFound
 		}
 
-		return entity.CardData{}, fmt.Errorf("error while processing response row in postgres while getting login-password data: %w", err)
+		return entity.CardData{}, fmt.Errorf("error while processing response row in postgres while getting card data: %w", err)
 	}
 
 	return outData, nil
@@ -136,11 +136,11 @@ func (p *Postgres) GetCardObjects(ctx context.Context, userID entity.UserID) (en
 
 	rows, err := p.pool.Query(ctx, query, userID)
 	if err != nil {
-		return nil, fmt.Errorf("error in postgres request execution while getting data objects: %w", err)
+		return nil, fmt.Errorf("error in postgres request execution while getting card data objects: %w", err)
 	}
 
 	if rows.Err() != nil {
-		return nil, fmt.Errorf("error in postgres requested rows while getting data objects: %w", rows.Err())
+		return nil, fmt.Errorf("error in postgres requested rows while getting card data objects: %w", rows.Err())
 	}
 
 	var outData entity.CardDataObjects

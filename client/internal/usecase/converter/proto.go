@@ -102,3 +102,25 @@ func ConvertPbCardObjectsToCardObject(data *pb.CardObjects) entity.CardObjects {
 
 	return output
 }
+
+// ConvertDataRequestTypeToPbDataType Converts app data request object to protobuf data request object
+func ConvertDataRequestTypeToPbDataType(requestType entity.DataRequestType) pb.DataType {
+	switch requestType {
+	case entity.DataRequestLoginPassword:
+		return pb.DataType_Type_LoginPassword
+	case entity.DataRequestText:
+		return pb.DataType_Type_Text
+	case entity.DataRequestCard:
+		return pb.DataType_Type_Card
+	default:
+		return pb.DataType_Type_Invalid
+	}
+}
+
+// CreatePbDataGetterRequest Creates protobuf data getter request object
+func CreatePbDataGetterRequest(name entity.ObjectName, requestType entity.DataRequestType) *pb.DataGetterRequest {
+	return &pb.DataGetterRequest{
+		Type: ConvertDataRequestTypeToPbDataType(requestType),
+		Name: string(name),
+	}
+}

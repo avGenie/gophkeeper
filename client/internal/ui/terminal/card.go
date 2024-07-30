@@ -19,9 +19,9 @@ const (
 
 func (t *Terminal) getCard() error {
 	var choice CardChoice
-	t.menuCard()
 
 	for {
+		t.menuCard()
 		fmt.Scan(&choice)
 
 		switch choice {
@@ -49,8 +49,6 @@ func (t *Terminal) getCard() error {
 		default:
 			fmt.Fprintln(t.out, ChoiceReenterChoice)
 		}
-
-		t.menuCard()
 	}
 }
 

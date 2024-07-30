@@ -6,6 +6,7 @@ import (
 
 	pb "github.com/avGenie/gophkeeper/proto"
 	"github.com/avGenie/gophkeeper/server/internal/entity"
+	"github.com/avGenie/gophkeeper/server/internal/storage"
 	"github.com/avGenie/gophkeeper/server/internal/usecase"
 	"github.com/avGenie/gophkeeper/server/internal/usecase/converter"
 	"github.com/avGenie/gophkeeper/server/internal/usecase/crypto"
@@ -44,6 +45,10 @@ func (s *GRPCServer) DeleteObject(ctx context.Context, pbRequest *pb.DataGetterR
 	case entity.DataRequestLoginPassword:
 		err = s.storage.DeleteLoginPasswordData(ctx, request.Name, userID)
 		if err != nil {
+			if errors.Is(err, storage.ErrLoginPasswordDataNotFound) {
+				return nil, status.Errorf(codes.NotFound, err.Error())
+			}
+
 			zap.S().Error("failed to delete login password data", zap.Error(err), zap.String("user_id", string(userID)))
 
 			return nil, status.Errorf(codes.Internal, InternalServerError)
@@ -51,6 +56,10 @@ func (s *GRPCServer) DeleteObject(ctx context.Context, pbRequest *pb.DataGetterR
 	case entity.DataRequestText:
 		err = s.storage.DeleteTextData(ctx, request.Name, userID)
 		if err != nil {
+			if errors.Is(err, storage.ErrTextDataNotFound) {
+				return nil, status.Errorf(codes.NotFound, err.Error())
+			}
+
 			zap.S().Error("failed to delete text data", zap.Error(err), zap.String("user_id", string(userID)))
 
 			return nil, status.Errorf(codes.Internal, InternalServerError)
@@ -58,6 +67,10 @@ func (s *GRPCServer) DeleteObject(ctx context.Context, pbRequest *pb.DataGetterR
 	case entity.DataRequestCard:
 		err = s.storage.DeleteCardData(ctx, request.Name, userID)
 		if err != nil {
+			if errors.Is(err, storage.ErrCardDataNotFound) {
+				return nil, status.Errorf(codes.NotFound, err.Error())
+			}
+
 			zap.S().Error("failed to delete card data", zap.Error(err), zap.String("user_id", string(userID)))
 
 			return nil, status.Errorf(codes.Internal, InternalServerError)

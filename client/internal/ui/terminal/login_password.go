@@ -19,9 +19,9 @@ const (
 
 func (t *Terminal) getLoginPassword() error {
 	var choice LoginPasswordChoice
-	t.menuLoginPassword()
 
 	for {
+		t.menuLoginPassword()
 		fmt.Scan(&choice)
 
 		switch choice {
@@ -33,8 +33,6 @@ func (t *Terminal) getLoginPassword() error {
 				return err
 			}
 
-			t.getLoginPassword()
-
 		case LoginPassword_GetAll:
 			err := t.loginPasswordGetAll()
 			if err != nil {
@@ -42,8 +40,6 @@ func (t *Terminal) getLoginPassword() error {
 
 				return err
 			}
-
-			t.getLoginPassword()
 
 		case LoginPassword_Exit:
 			fmt.Fprintln(t.out, Exiting)
@@ -53,8 +49,6 @@ func (t *Terminal) getLoginPassword() error {
 		default:
 			fmt.Fprintln(t.out, ChoiceReenterChoice)
 		}
-
-		t.menuLoginPassword()
 	}
 }
 
