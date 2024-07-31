@@ -5,7 +5,7 @@ type LoginPasswordObjects []LoginPassword
 
 // LoginPassword Contains user login and password
 type LoginPassword struct {
-	Name     string
+	Name     ObjectName
 	Login    string
 	Password string
 	Metadata Metadata

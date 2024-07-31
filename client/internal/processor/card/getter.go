@@ -12,7 +12,7 @@ func (p *CardProcessor) GetData(name entity.ObjectName) (entity.CardData, error)
 		return entity.CardData{}, err
 	}
 
-	p.data[entity.ObjectName(data.Name)] = data
+	p.data[data.Name] = data
 
 	return data, nil
 }
@@ -24,7 +24,7 @@ func (p *CardProcessor) GetObjects() (entity.CardObjects, error) {
 	}
 
 	for _, object := range data {
-		p.data[entity.ObjectName(object.Name)] = object
+		p.data[object.Name] = object
 	}
 
 	return data, nil

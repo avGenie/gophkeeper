@@ -19,4 +19,8 @@ type GophkeeperClient interface {
 	DeleteLoginPasswordData(name entity.ObjectName) error
 	DeleteTextData(name entity.ObjectName) error
 	DeleteCardData(name entity.ObjectName) error
+
+	SaveLoginPasswordData(object entity.LoginPassword) error
+	SaveTextData(object entity.TextData) error
+	SaveCardData(object entity.CardData) error
 }

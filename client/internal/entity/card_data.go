@@ -5,7 +5,7 @@ type CardObjects []CardData
 
 // CardData Contains bank card data as data content
 type CardData struct {
-	Name            string
+	Name            ObjectName
 	Number          string
 	ExpirationMonth int
 	ExpirationYear  int

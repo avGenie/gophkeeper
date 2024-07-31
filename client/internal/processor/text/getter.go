@@ -12,7 +12,7 @@ func (p *TextProcessor) GetData(name entity.ObjectName) (entity.TextData, error)
 		return entity.TextData{}, err
 	}
 
-	p.data[entity.ObjectName(data.Name)] = data
+	p.data[data.Name] = data
 
 	return data, nil
 }
@@ -24,7 +24,7 @@ func (p *TextProcessor) GetObjects() (entity.TextObjects, error) {
 	}
 
 	for _, object := range data {
-		p.data[entity.ObjectName(object.Name)] = object
+		p.data[object.Name] = object
 	}
 
 	return data, nil

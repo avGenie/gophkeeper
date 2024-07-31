@@ -12,7 +12,7 @@ func (p *LoginPasswordProcessor) GetData(name entity.ObjectName) (entity.LoginPa
 		return entity.LoginPassword{}, err
 	}
 
-	p.data[entity.ObjectName(data.Name)] = data
+	p.data[data.Name] = data
 
 	return data, nil
 }
@@ -24,7 +24,7 @@ func (p *LoginPasswordProcessor) GetObjects() (entity.LoginPasswordObjects, erro
 	}
 
 	for _, object := range data {
-		p.data[entity.ObjectName(object.Name)] = object
+		p.data[object.Name] = object
 	}
 
 	return data, nil

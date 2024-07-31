@@ -30,7 +30,7 @@ func (t *Terminal) getLoginPassword() error {
 				return err
 			}
 
-		case LoginPassword_Exit:
+		case LoginPassword_GetExit:
 			fmt.Fprintln(t.out, Exiting)
 
 			return nil
@@ -90,7 +90,7 @@ func (t *Terminal) getText() error {
 				return err
 			}
 
-		case Text_Exit:
+		case Text_GetExit:
 			fmt.Fprintln(t.out, Exiting)
 
 			return nil
@@ -150,7 +150,7 @@ func (t *Terminal) getCard() error {
 				return err
 			}
 
-		case Card_Exit:
+		case Card_GetExit:
 			fmt.Fprintln(t.out, Exiting)
 
 			return nil

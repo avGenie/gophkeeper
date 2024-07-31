@@ -32,10 +32,17 @@ func ConvertPbMetadataToMetadata(data *pb.MetaData) entity.Metadata {
 	}
 }
 
+// ConvertMetadataToMetadataPb Converts app metadata to protobuf metadata
+func ConvertMetadataToMetadataPb(data entity.Metadata) *pb.MetaData {
+	return &pb.MetaData{
+		Data: data.Data,
+	}
+}
+
 // ConvertPbLoginPasswordDataToLoginPasswordData Converts protobuf login-password data to app login-password data
 func ConvertPbLoginPasswordDataToLoginPasswordData(data *pb.LoginPasswordData) entity.LoginPassword {
 	return entity.LoginPassword{
-		Name:     data.GetName(),
+		Name:     entity.ObjectName(data.GetName()),
 		Login:    data.GetLogin(),
 		Password: data.GetPassword(),
 		Metadata: ConvertPbMetadataToMetadata(data.GetMeta()),
@@ -55,10 +62,20 @@ func ConvertPbLoginPasswordObjectsToLoginPasswordObjects(data *pb.LoginPasswordO
 	return output
 }
 
+// ConvertLoginPasswordDataToPbLoginPassword Converts app login-password data to protobuf login-password data
+func ConvertLoginPasswordDataToPbLoginPassword(data entity.LoginPassword) *pb.LoginPasswordData {
+	return &pb.LoginPasswordData{
+		Name:     string(data.Name),
+		Login:    data.Login,
+		Password: data.Password,
+		Meta:     ConvertMetadataToMetadataPb(data.Metadata),
+	}
+}
+
 // ConvertPbTextToText Converts protobuf text data to app text data
 func ConvertPbTextToText(data *pb.TextData) entity.TextData {
 	return entity.TextData{
-		Name:     data.GetName(),
+		Name:     entity.ObjectName(data.GetName()),
 		Text:     data.GetText(),
 		Metadata: ConvertPbMetadataToMetadata(data.GetMeta()),
 	}
@@ -77,10 +94,19 @@ func ConvertPbTextObjectsToTextObject(data *pb.TextObjects) entity.TextObjects {
 	return output
 }
 
+// ConvertTextToPbText Converts app text data to protobuf text data
+func ConvertTextToPbText(data entity.TextData) *pb.TextData {
+	return &pb.TextData{
+		Name: string(data.Name),
+		Text: data.Text,
+		Meta: ConvertMetadataToMetadataPb(data.Metadata),
+	}
+}
+
 // ConvertPbCardToCard Converts protobuf card data to app card data
 func ConvertPbCardToCard(data *pb.CardData) entity.CardData {
 	return entity.CardData{
-		Name:            data.GetName(),
+		Name:            entity.ObjectName(data.GetName()),
 		Number:          data.GetNumber(),
 		ExpirationMonth: int(data.GetExpirationMonth()),
 		ExpirationYear:  int(data.GetExpirationYear()),
@@ -101,6 +127,19 @@ func ConvertPbCardObjectsToCardObject(data *pb.CardObjects) entity.CardObjects {
 	}
 
 	return output
+}
+
+// ConvertCardToPbCard Converts app card data to protobuf card data
+func ConvertCardToPbCard(data entity.CardData) *pb.CardData {
+	return &pb.CardData{
+		Name:            string(data.Name),
+		Number:          data.Number,
+		ExpirationMonth: int32(data.ExpirationMonth),
+		ExpirationYear:  int32(data.ExpirationYear),
+		Code:            int32(data.Code),
+		Cardholder:      data.Cardholder,
+		Meta:            ConvertMetadataToMetadataPb(data.Metadata),
+	}
 }
 
 // ConvertDataRequestTypeToPbDataType Converts app data request object to protobuf data request object
