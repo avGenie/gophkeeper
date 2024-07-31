@@ -56,3 +56,12 @@ const (
 	Save_Text
 	Save_Card
 )
+
+type UpdateChoice int
+
+const (
+	Update_Exit UpdateChoice = iota
+	Update_LoginPassword
+	Update_Text
+	Update_Card
+)

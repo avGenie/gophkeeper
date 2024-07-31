@@ -1,42 +1,40 @@
 package terminal
 
-import (
-	"fmt"
-)
+import "fmt"
 
-func (t *Terminal) save() error {
-	var choice SaveChoice
+func (t *Terminal) update() error {
+	var choice UpdateChoice
 
 	for {
 		t.deleteMenu()
 		fmt.Scan(&choice)
 
 		switch choice {
-		case Save_LoginPassword:
-			err := t.saveLoginPassword()
+		case Update_LoginPassword:
+			err := t.updateLoginPassword()
 			if err != nil {
 				fmt.Fprintln(t.out, Exiting)
 
 				return err
 			}
 
-		case Save_Text:
-			err := t.saveText()
+		case Update_Text:
+			err := t.updateText()
 			if err != nil {
 				fmt.Fprintln(t.out, Exiting)
 
 				return err
 			}
 
-		case Save_Card:
-			err := t.saveCard()
+		case Update_Card:
+			err := t.updateCard()
 			if err != nil {
 				fmt.Fprintln(t.out, Exiting)
 
 				return err
 			}
 
-		case Save_Exit:
+		case Update_Exit:
 			fmt.Fprintln(t.out, Exiting)
 
 			return nil
@@ -47,11 +45,11 @@ func (t *Terminal) save() error {
 	}
 }
 
-func (t *Terminal) saveLoginPassword() error {
+func (t *Terminal) updateLoginPassword() error {
 	fmt.Fprintln(t.out, "Input new object data")
 	savedObject := t.inputLoginPasswordData()
 
-	err := t.loginPasswordProc.SaveData(savedObject)
+	err := t.loginPasswordProc.UpdateData(savedObject)
 	if err != nil {
 		return t.saveProcessError(err, "failed to save login-password data object")
 	}
@@ -59,11 +57,11 @@ func (t *Terminal) saveLoginPassword() error {
 	return nil
 }
 
-func (t *Terminal) saveText() error {
+func (t *Terminal) updateText() error {
 	fmt.Fprintln(t.out, "Input new object data")
 	savedObject := t.inputTextData()
 
-	err := t.textProc.SaveData(savedObject)
+	err := t.textProc.UpdateData(savedObject)
 	if err != nil {
 		return t.saveProcessError(err, "failed to save text data object")
 	}
@@ -71,11 +69,11 @@ func (t *Terminal) saveText() error {
 	return nil
 }
 
-func (t *Terminal) saveCard() error {
+func (t *Terminal) updateCard() error {
 	fmt.Fprintln(t.out, "Input new object data")
 	savedObject := t.inputCardData()
 
-	err := t.cardProc.SaveData(savedObject)
+	err := t.cardProc.UpdateData(savedObject)
 	if err != nil {
 		return t.saveProcessError(err, "failed to save card data object")
 	}

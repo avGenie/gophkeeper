@@ -23,4 +23,8 @@ type GophkeeperClient interface {
 	SaveLoginPasswordData(object entity.LoginPassword) error
 	SaveTextData(object entity.TextData) error
 	SaveCardData(object entity.CardData) error
+
+	UpdateLoginPasswordData(object entity.LoginPassword) error
+	UpdateTextData(object entity.TextData) error
+	UpdateCardData(object entity.CardData) error
 }
