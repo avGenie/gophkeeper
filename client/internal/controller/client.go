@@ -7,7 +7,7 @@ type GophkeeperClient interface {
 	Stop()
 
 	RegisterUser(userCreds entity.User) error
-	AuthenticateUser(userCreds entity.User) (entity.Token, error)
+	AuthenticateUser(userCreds entity.User) error
 
 	GetLoginPasswordData(name entity.ObjectName) (entity.LoginPassword, error)
 	GetLoginPasswordObjects() (entity.LoginPasswordObjects, error)
@@ -16,7 +16,7 @@ type GophkeeperClient interface {
 	GetCardData(name entity.ObjectName) (entity.CardData, error)
 	GetCardObjects() (entity.CardObjects, error)
 
-	DeleteLoginPasswordData(name entity.ObjectName, token entity.Token) error
-	DeleteTextData(name entity.ObjectName, token entity.Token) error
-	DeleteCardData(name entity.ObjectName, token entity.Token) error
+	DeleteLoginPasswordData(name entity.ObjectName) error
+	DeleteTextData(name entity.ObjectName) error
+	DeleteCardData(name entity.ObjectName) error
 }

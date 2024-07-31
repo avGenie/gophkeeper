@@ -13,13 +13,13 @@ import (
 )
 
 // DeleteLoginPasswordData Delete login-password data for user
-func (c *GRPCClient) DeleteLoginPasswordData(name entity.ObjectName, token entity.Token) error {
+func (c *GRPCClient) DeleteLoginPasswordData(name entity.ObjectName) error {
 	dataRequest := converter.CreatePbDataGetterRequest(name, entity.DataRequestLoginPassword)
 
 	ctx, cancel := context.WithTimeout(context.Background(), requestTimeout)
 	defer cancel()
 
-	ctx = client_context.SaveTokenToContext(ctx, token)
+	ctx = client_context.SaveTokenToContext(ctx, c.userToken)
 
 	_, err := c.client.DeleteObject(ctx, dataRequest)
 	if err != nil {
@@ -46,13 +46,13 @@ func (c *GRPCClient) DeleteLoginPasswordData(name entity.ObjectName, token entit
 }
 
 // DeleteTextData Delete text data for user
-func (c *GRPCClient) DeleteTextData(name entity.ObjectName, token entity.Token) error {
+func (c *GRPCClient) DeleteTextData(name entity.ObjectName) error {
 	dataRequest := converter.CreatePbDataGetterRequest(name, entity.DataRequestText)
 
 	ctx, cancel := context.WithTimeout(context.Background(), requestTimeout)
 	defer cancel()
 
-	ctx = client_context.SaveTokenToContext(ctx, token)
+	ctx = client_context.SaveTokenToContext(ctx, c.userToken)
 
 	_, err := c.client.DeleteObject(ctx, dataRequest)
 	if err != nil {
@@ -79,13 +79,13 @@ func (c *GRPCClient) DeleteTextData(name entity.ObjectName, token entity.Token) 
 }
 
 // DeleteCardData Delete card data for user
-func (c *GRPCClient) DeleteCardData(name entity.ObjectName, token entity.Token) error {
+func (c *GRPCClient) DeleteCardData(name entity.ObjectName) error {
 	dataRequest := converter.CreatePbDataGetterRequest(name, entity.DataRequestCard)
 
 	ctx, cancel := context.WithTimeout(context.Background(), requestTimeout)
 	defer cancel()
 
-	ctx = client_context.SaveTokenToContext(ctx, token)
+	ctx = client_context.SaveTokenToContext(ctx, c.userToken)
 
 	_, err := c.client.DeleteObject(ctx, dataRequest)
 	if err != nil {

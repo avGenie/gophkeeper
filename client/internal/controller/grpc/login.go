@@ -7,6 +7,7 @@ import (
 	"github.com/avGenie/gophkeeper/client/internal/controller"
 	"github.com/avGenie/gophkeeper/client/internal/entity"
 	"github.com/avGenie/gophkeeper/client/internal/usecase/converter"
+	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -35,7 +36,7 @@ func (c *GRPCClient) RegisterUser(userCreds entity.User) error {
 }
 
 // AuthenticateUser Implements user authentication. Returns token.
-func (c *GRPCClient) AuthenticateUser(userCreds entity.User) (entity.Token, error) {
+func (c *GRPCClient) AuthenticateUser(userCreds entity.User) error {
 	pbCreds := converter.ConvertUserCredentialsToPbUserCredentials(userCreds)
 
 	ctx, cancel := context.WithTimeout(context.Background(), requestTimeout)
@@ -44,19 +45,19 @@ func (c *GRPCClient) AuthenticateUser(userCreds entity.User) (entity.Token, erro
 	token, err := c.client.AuthenticateUser(ctx, pbCreds)
 	if err != nil {
 		if status.Code(err) == codes.NotFound {
-			return entity.Token(""), controller.ErrUserNotFound
+			return controller.ErrUserNotFound
 		}
 
 		if status.Code(err) == codes.InvalidArgument {
-			return entity.Token(""), controller.ErrUserInvalid
+			return controller.ErrUserInvalid
 		}
 
-		return entity.Token(""), fmt.Errorf("failed to authenticate user: %w", err)
+		return fmt.Errorf("failed to authenticate user: %w", err)
 	}
 
-	userToken := converter.ConvertPbAuthTokenToToken(token)
-	c.userToken = userToken
+	c.userToken = converter.ConvertPbAuthTokenToToken(token)
 
-	return userToken, nil
+	zap.S().Debug("token created", zap.String("token", string(c.userToken)))
+
+	return nil
 }
-

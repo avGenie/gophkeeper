@@ -125,7 +125,7 @@ func (t *Terminal) authenticate() (bool, error) {
 		return false, fmt.Errorf("couldn't authenticate user: %w", err)
 	}
 
-	token, err := t.client.AuthenticateUser(creds)
+	err = t.client.AuthenticateUser(creds)
 	if err != nil {
 		if errors.Is(controller.ErrUserNotFound, err) {
 			fmt.Fprintln(t.out, "User with this credentials not found. Please, try again.")
@@ -144,10 +144,6 @@ func (t *Terminal) authenticate() (bool, error) {
 
 		return false, fmt.Errorf("couldn't authenticate user: %w", err)
 	}
-
-	zap.S().Debug("token created", zap.String("token", string(token)))
-
-	t.userToken = token
 
 	return true, nil
 }

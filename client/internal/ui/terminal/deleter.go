@@ -66,7 +66,7 @@ func (t *Terminal) deleteLoginPassword() error {
 
 	name := entity.ObjectName(t.scanText())
 
-	err := t.client.DeleteLoginPasswordData(name, t.userToken)
+	err := t.loginPasswordProc.DeleteData(name)
 	if err != nil {
 		return t.deleteProcessError(err)
 	}
@@ -81,7 +81,7 @@ func (t *Terminal) deleteText() error {
 
 	zap.S().Debug("deleting text", zap.String("name", string(name)))
 
-	err := t.client.DeleteTextData(name, t.userToken)
+	err := t.textProc.DeleteData(name)
 	if err != nil {
 		return t.deleteProcessError(err)
 	}
@@ -96,7 +96,7 @@ func (t *Terminal) deleteCard() error {
 
 	name := entity.ObjectName(t.scanText())
 
-	err := t.client.DeleteCardData(name, t.userToken)
+	err := t.cardProc.DeleteData(name)
 	if err != nil {
 		return t.deleteProcessError(err)
 	}
