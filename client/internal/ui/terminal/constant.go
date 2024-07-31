@@ -12,6 +12,7 @@ const (
 	PermissionDenied    = "\tPermission denied. Please, login again."
 	DataNotFound        = "\tRequested data not found."
 	DataDeleteWrongName = "\tData with given name not found. Please, try again."
+	DataSaveExisted     = "\tData with given name already exists. Please, try again."
 )
 
 type LoginPasswordChoice int

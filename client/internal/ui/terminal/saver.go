@@ -133,13 +133,13 @@ func (t *Terminal) saveCard() error {
 
 		year, err := strconv.Atoi(strMonth)
 		if err != nil {
-			fmt.Fprintln(t.out, "Wrong data. Please, enter the number between 1920 and 2090")
+			fmt.Fprintln(t.out, "Wrong data. Year should be a number (for example, 2006)")
 			continue
 		}
 
-		err = validator.ValidateExpirationMonth(year)
+		err = validator.ValidateExpirationYear(year)
 		if err != nil {
-			fmt.Fprintln(t.out, "Wrong data. Please, enter the number between 1920 and 2090")
+			fmt.Fprintln(t.out, err.Error())
 			continue
 		}
 
@@ -149,7 +149,7 @@ func (t *Terminal) saveCard() error {
 	}
 
 	for {
-		fmt.Fprint(t.out, "Expiration year: ")
+		fmt.Fprint(t.out, "Expiration code: ")
 		strCode := t.scanText()
 
 		code, err := strconv.Atoi(strCode)

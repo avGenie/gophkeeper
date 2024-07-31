@@ -58,13 +58,13 @@ func (t *Terminal) saveProcessError(err error, errMsg string) error {
 	}
 
 	if errors.Is(err, controller.ErrDataDeleteWrongName) {
-		fmt.Fprintln(t.out, DataDeleteWrongName)
+		fmt.Fprintln(t.out, DataSaveExisted)
 
 		return nil
 	}
 
 	if errors.Is(err, controller.ErrDataAlreadyExists) {
-		fmt.Fprintln(t.out, DataDeleteWrongName)
+		fmt.Fprintln(t.out, DataSaveExisted)
 
 		return nil
 	}

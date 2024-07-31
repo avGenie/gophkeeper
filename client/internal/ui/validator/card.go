@@ -1,16 +1,20 @@
 package validator
 
-import "strconv"
+import (
+	"fmt"
+	"strconv"
+	"time"
+)
 
 const (
 	minExpirationMonth = 1
 	maxExpirationMonth = 12
-	minExpirationYear  = 1920
-	maxExpirationYear  = 2090
+	minMaxYearDuration = 100
+	codeDigitCount = 3
 )
 
 func ValidateExpirationMonth(month int) error {
-	if month > minExpirationMonth && month < minExpirationMonth {
+	if month > maxExpirationMonth || month < minExpirationMonth {
 		return ErrInvalidCardExpirationMonth
 	}
 
@@ -18,8 +22,11 @@ func ValidateExpirationMonth(month int) error {
 }
 
 func ValidateExpirationYear(year int) error {
-	if year > minExpirationYear && year < minExpirationYear {
-		return ErrInvalidCardExpirationYear
+	minExpirationYear := time.Now().Year()
+	maxExpirationYear := minExpirationYear + minMaxYearDuration
+
+	if year > maxExpirationYear || year < minExpirationYear {
+		return fmt.Errorf("Wrong data. Please, enter the number between %d and %d", minExpirationYear, maxExpirationYear)
 	}
 
 	return nil
@@ -28,7 +35,7 @@ func ValidateExpirationYear(year int) error {
 func ValidateCode(code int) error {
 	digitsCount := len(strconv.Itoa(code))
 
-	if code < 0 && digitsCount != 3 {
+	if code < 0 || digitsCount != codeDigitCount {
 		return ErrInvalidCardCode
 	}
 
