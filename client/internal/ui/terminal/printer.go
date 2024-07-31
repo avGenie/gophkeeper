@@ -49,3 +49,8 @@ func (t *Terminal) printCardObjects(data entity.CardObjects) {
 		fmt.Fprintf(t.out, "\n")
 	}
 }
+
+func (t *Terminal) printNameMenu() {
+	fmt.Fprint(t.out, "Data name: ")
+	fmt.Fprintln(t.out, "")
+}

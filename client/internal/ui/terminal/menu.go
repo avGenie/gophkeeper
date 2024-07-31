@@ -61,6 +61,13 @@ func (t *Terminal) Menu() {
 	}
 }
 
+func (t *Terminal) loginMenu() {
+	fmt.Fprintln(t.out, "1. Registration")
+	fmt.Fprintln(t.out, "2. Authentication")
+	fmt.Fprintln(t.out, ChoiceExit)
+	fmt.Fprint(t.out, ChoiceEnterChoice)
+}
+
 func (t *Terminal) menuMenu() {
 	fmt.Fprintln(t.out, "1. Get login-password data")
 	fmt.Fprintln(t.out, "2. Get text data")
@@ -68,6 +75,23 @@ func (t *Terminal) menuMenu() {
 	fmt.Fprintln(t.out, "4. Add")
 	fmt.Fprintln(t.out, "5. Delete")
 	fmt.Fprintln(t.out, "6. Update")
+	fmt.Fprintln(t.out, ChoiceExit)
+	fmt.Fprint(t.out, ChoiceEnterChoice)
+	fmt.Fprintln(t.out, "")
+}
+
+func (t *Terminal) menuGetItems() {
+	fmt.Fprintln(t.out, "1. Get by name")
+	fmt.Fprintln(t.out, "2. Get all")
+	fmt.Fprintln(t.out, ChoiceBack)
+	fmt.Fprint(t.out, ChoiceEnterChoice)
+	fmt.Fprintln(t.out, "")
+}
+
+func (t *Terminal) deleteMenu() {
+	fmt.Fprintln(t.out, "1. Login-password data")
+	fmt.Fprintln(t.out, "2. Text data")
+	fmt.Fprintln(t.out, "3. Card data")
 	fmt.Fprintln(t.out, ChoiceExit)
 	fmt.Fprint(t.out, ChoiceEnterChoice)
 	fmt.Fprintln(t.out, "")

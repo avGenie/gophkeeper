@@ -37,3 +37,12 @@ const (
 	Card_GetByName
 	Card_GetAll
 )
+
+type DeleteChoice int
+
+const (
+	Delete_Exit DeleteChoice = iota
+	Delete_LoginPassword
+	Delete_Text
+	Delete_Card
+)

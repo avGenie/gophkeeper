@@ -60,13 +60,6 @@ func (t *Terminal) Login() error {
 	}
 }
 
-func (t *Terminal) loginMenu() {
-	fmt.Fprintln(t.out, "1. Registration")
-	fmt.Fprintln(t.out, "2. Authentication")
-	fmt.Fprintln(t.out, ChoiceExit)
-	fmt.Fprint(t.out, ChoiceEnterChoice)
-}
-
 func (t *Terminal) enterLoginPassword() (entity.User, error) {
 	var loginPass entity.User
 

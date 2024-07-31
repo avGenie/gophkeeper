@@ -1,21 +1,10 @@
 package terminal
 
 import (
-	"errors"
 	"fmt"
 
-	"github.com/avGenie/gophkeeper/client/internal/controller"
 	"github.com/avGenie/gophkeeper/client/internal/entity"
 	"go.uber.org/zap"
-)
-
-type DeleteChoice int
-
-const (
-	Delete_Exit DeleteChoice = iota
-	Delete_LoginPassword
-	Delete_Text
-	Delete_Card
 )
 
 func (t *Terminal) delete() error {
@@ -62,7 +51,7 @@ func (t *Terminal) delete() error {
 }
 
 func (t *Terminal) deleteLoginPassword() error {
-	t.writeNameMenu()
+	t.printNameMenu()
 
 	name := entity.ObjectName(t.scanText())
 
@@ -75,7 +64,7 @@ func (t *Terminal) deleteLoginPassword() error {
 }
 
 func (t *Terminal) deleteText() error {
-	t.writeNameMenu()
+	t.printNameMenu()
 
 	name := entity.ObjectName(t.scanText())
 
@@ -92,7 +81,7 @@ func (t *Terminal) deleteText() error {
 }
 
 func (t *Terminal) deleteCard() error {
-	t.writeNameMenu()
+	t.printNameMenu()
 
 	name := entity.ObjectName(t.scanText())
 
@@ -102,37 +91,4 @@ func (t *Terminal) deleteCard() error {
 	}
 
 	return nil
-}
-
-func (t *Terminal) deleteProcessError(err error) error {
-	if errors.Is(err, controller.ErrUserPermissionDenied) {
-		fmt.Fprintln(t.out, PermissionDenied)
-
-		return errExit
-	}
-
-	if errors.Is(err, controller.ErrDataDeleteWrongName) {
-		fmt.Fprintln(t.out, DataDeleteWrongName)
-
-		return nil
-	}
-
-	zap.S().Error("failed to delete login-password data object", zap.Error(err))
-	fmt.Fprintln(t.out, UnexpectedError)
-
-	return errExit
-}
-
-func (t *Terminal) deleteMenu() {
-	fmt.Fprintln(t.out, "1. Login-password data")
-	fmt.Fprintln(t.out, "2. Text data")
-	fmt.Fprintln(t.out, "3. Card data")
-	fmt.Fprintln(t.out, ChoiceExit)
-	fmt.Fprint(t.out, ChoiceEnterChoice)
-	fmt.Fprintln(t.out, "")
-}
-
-func (t *Terminal) writeNameMenu() {
-	fmt.Fprint(t.out, "Data name: ")
-	fmt.Fprintln(t.out, "")
 }
