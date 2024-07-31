@@ -51,7 +51,7 @@ func (t *Terminal) updateLoginPassword() error {
 
 	err := t.loginPasswordProc.UpdateData(savedObject)
 	if err != nil {
-		return t.saveProcessError(err, "failed to save login-password data object")
+		return t.updateProcessError(err, "failed to save login-password data object")
 	}
 
 	return nil
@@ -63,7 +63,7 @@ func (t *Terminal) updateText() error {
 
 	err := t.textProc.UpdateData(savedObject)
 	if err != nil {
-		return t.saveProcessError(err, "failed to save text data object")
+		return t.updateProcessError(err, "failed to update text data object")
 	}
 
 	return nil
@@ -75,7 +75,7 @@ func (t *Terminal) updateCard() error {
 
 	err := t.cardProc.UpdateData(savedObject)
 	if err != nil {
-		return t.saveProcessError(err, "failed to save card data object")
+		return t.updateProcessError(err, "failed to update card data object")
 	}
 
 	return nil

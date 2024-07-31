@@ -74,3 +74,23 @@ func (t *Terminal) saveProcessError(err error, errMsg string) error {
 
 	return errExit
 }
+
+func (t *Terminal) updateProcessError(err error, errMsg string) error {
+	if errors.Is(err, controller.ErrUserPermissionDenied) {
+		fmt.Fprintln(t.out, PermissionDenied)
+
+		return errExit
+	}
+
+	if errors.Is(err, controller.ErrDataDeleteWrongName) {
+		fmt.Fprintln(t.out, DataSaveExisted)
+
+		return nil
+	}
+
+	zap.S().Error(errMsg, zap.Error(err))
+	fmt.Fprintln(t.out, UnexpectedError)
+
+	return errExit
+}
+
