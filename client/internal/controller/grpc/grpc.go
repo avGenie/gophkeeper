@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/avGenie/gophkeeper/client/internal/config"
+	"github.com/avGenie/gophkeeper/client/internal/entity"
 	"github.com/avGenie/gophkeeper/client/internal/ui"
 	"github.com/avGenie/gophkeeper/client/internal/ui/terminal"
 	pb "github.com/avGenie/gophkeeper/proto"
@@ -21,6 +22,8 @@ type GRPCClient struct {
 	conn   *grpc.ClientConn
 	client pb.GophkeeperClient
 	ui     ui.UI
+
+	userToken entity.Token
 }
 
 func NewClient(config config.Config) (*GRPCClient, error) {

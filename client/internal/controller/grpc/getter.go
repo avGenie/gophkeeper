@@ -14,13 +14,13 @@ import (
 )
 
 // GetLoginPasswordData Returns login-password data for user
-func (c *GRPCClient) GetLoginPasswordData(name entity.ObjectName, token entity.Token) (entity.LoginPassword, error) {
+func (c *GRPCClient) GetLoginPasswordData(name entity.ObjectName) (entity.LoginPassword, error) {
 	dataRequest := converter.ConvertObjectNameToPbDataRequest(name)
 
 	ctx, cancel := context.WithTimeout(context.Background(), requestTimeout)
 	defer cancel()
 
-	ctx = client_context.SaveTokenToContext(ctx, token)
+	ctx = client_context.SaveTokenToContext(ctx, c.userToken)
 
 	data, err := c.client.GetLoginPasswordObject(ctx, dataRequest)
 	if err != nil {
@@ -39,11 +39,11 @@ func (c *GRPCClient) GetLoginPasswordData(name entity.ObjectName, token entity.T
 }
 
 // GetLoginPasswordObjects Returns login-password objects for user
-func (c *GRPCClient) GetLoginPasswordObjects(token entity.Token) (entity.LoginPasswordObjects, error) {
+func (c *GRPCClient) GetLoginPasswordObjects() (entity.LoginPasswordObjects, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), requestTimeout)
 	defer cancel()
 
-	ctx = client_context.SaveTokenToContext(ctx, token)
+	ctx = client_context.SaveTokenToContext(ctx, c.userToken)
 
 	obj, err := c.client.GetLoginPasswordObjects(ctx, &emptypb.Empty{})
 	if err != nil {
@@ -62,13 +62,13 @@ func (c *GRPCClient) GetLoginPasswordObjects(token entity.Token) (entity.LoginPa
 }
 
 // GetTextUser Returns text data for user
-func (c *GRPCClient) GetTextData(name entity.ObjectName, token entity.Token) (entity.TextData, error) {
+func (c *GRPCClient) GetTextData(name entity.ObjectName) (entity.TextData, error) {
 	dataRequest := converter.ConvertObjectNameToPbDataRequest(name)
 
 	ctx, cancel := context.WithTimeout(context.Background(), requestTimeout)
 	defer cancel()
 
-	ctx = client_context.SaveTokenToContext(ctx, token)
+	ctx = client_context.SaveTokenToContext(ctx, c.userToken)
 
 	data, err := c.client.GetTextObject(ctx, dataRequest)
 	if err != nil {
@@ -87,11 +87,11 @@ func (c *GRPCClient) GetTextData(name entity.ObjectName, token entity.Token) (en
 }
 
 // GetTextObjects Returns text objects for user
-func (c *GRPCClient) GetTextObjects(token entity.Token) (entity.TextObjects, error) {
+func (c *GRPCClient) GetTextObjects() (entity.TextObjects, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), requestTimeout)
 	defer cancel()
 
-	ctx = client_context.SaveTokenToContext(ctx, token)
+	ctx = client_context.SaveTokenToContext(ctx, c.userToken)
 
 	obj, err := c.client.GetTextObjects(ctx, &emptypb.Empty{})
 	if err != nil {
@@ -110,13 +110,13 @@ func (c *GRPCClient) GetTextObjects(token entity.Token) (entity.TextObjects, err
 }
 
 // GetCardData Returns card data for user
-func (c *GRPCClient) GetCardData(name entity.ObjectName, token entity.Token) (entity.CardData, error) {
+func (c *GRPCClient) GetCardData(name entity.ObjectName) (entity.CardData, error) {
 	dataRequest := converter.ConvertObjectNameToPbDataRequest(name)
 
 	ctx, cancel := context.WithTimeout(context.Background(), requestTimeout)
 	defer cancel()
 
-	ctx = client_context.SaveTokenToContext(ctx, token)
+	ctx = client_context.SaveTokenToContext(ctx, c.userToken)
 
 	data, err := c.client.GetCardObject(ctx, dataRequest)
 	if err != nil {
@@ -135,11 +135,11 @@ func (c *GRPCClient) GetCardData(name entity.ObjectName, token entity.Token) (en
 }
 
 // GetCardObjects Returns card objects for user
-func (c *GRPCClient) GetCardObjects(token entity.Token) (entity.CardObjects, error) {
+func (c *GRPCClient) GetCardObjects() (entity.CardObjects, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), requestTimeout)
 	defer cancel()
 
-	ctx = client_context.SaveTokenToContext(ctx, token)
+	ctx = client_context.SaveTokenToContext(ctx, c.userToken)
 
 	obj, err := c.client.GetCardObjects(ctx, &emptypb.Empty{})
 	if err != nil {

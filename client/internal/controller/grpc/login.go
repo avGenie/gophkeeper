@@ -54,6 +54,9 @@ func (c *GRPCClient) AuthenticateUser(userCreds entity.User) (entity.Token, erro
 		return entity.Token(""), fmt.Errorf("failed to authenticate user: %w", err)
 	}
 
-	return converter.ConvertPbAuthTokenToToken(token), nil
+	userToken := converter.ConvertPbAuthTokenToToken(token)
+	c.userToken = userToken
+
+	return userToken, nil
 }
 

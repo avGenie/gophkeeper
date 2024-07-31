@@ -9,12 +9,12 @@ type GophkeeperClient interface {
 	RegisterUser(userCreds entity.User) error
 	AuthenticateUser(userCreds entity.User) (entity.Token, error)
 
-	GetLoginPasswordData(name entity.ObjectName, token entity.Token) (entity.LoginPassword, error)
-	GetLoginPasswordObjects(token entity.Token) (entity.LoginPasswordObjects, error)
-	GetTextData(name entity.ObjectName, token entity.Token) (entity.TextData, error)
-	GetTextObjects(token entity.Token) (entity.TextObjects, error)
-	GetCardData(name entity.ObjectName, token entity.Token) (entity.CardData, error)
-	GetCardObjects(token entity.Token) (entity.CardObjects, error)
+	GetLoginPasswordData(name entity.ObjectName) (entity.LoginPassword, error)
+	GetLoginPasswordObjects() (entity.LoginPasswordObjects, error)
+	GetTextData(name entity.ObjectName) (entity.TextData, error)
+	GetTextObjects() (entity.TextObjects, error)
+	GetCardData(name entity.ObjectName) (entity.CardData, error)
+	GetCardObjects() (entity.CardObjects, error)
 
 	DeleteLoginPasswordData(name entity.ObjectName, token entity.Token) error
 	DeleteTextData(name entity.ObjectName, token entity.Token) error
