@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/avGenie/gophkeeper/server/internal/usecase/validation"
+	"github.com/avGenie/gophkeeper/package/validator"
 	"gopkg.in/yaml.v3"
 )
 
@@ -27,6 +27,7 @@ type Config struct {
 type ServerConfig struct {
 	GRPCAddress string `json:"grpc_addr" yaml:"grpc_addr"`
 	LogLevel    string `json:"log_level" yaml:"log_level"`
+	CertsPath   string `json:"certs_path" yaml:"certs_path"`
 }
 
 // ServerConfig Storage configuration
@@ -65,7 +66,7 @@ func parseConfigPathEnv() (string, error) {
 
 	flag.Parse()
 
-	if err := validation.ValidateConfigPath(configPath); err != nil {
+	if err := validator.ValidateConfigPath(configPath); err != nil {
 		return "", err
 	}
 

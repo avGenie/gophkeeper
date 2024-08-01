@@ -8,10 +8,10 @@ import (
 	"github.com/avGenie/gophkeeper/client/internal/entity"
 	"github.com/avGenie/gophkeeper/client/internal/ui"
 	"github.com/avGenie/gophkeeper/client/internal/ui/terminal"
+	"github.com/avGenie/gophkeeper/package/tls"
 	pb "github.com/avGenie/gophkeeper/proto"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 )
 
 const (
@@ -27,7 +27,12 @@ type GRPCClient struct {
 }
 
 func NewClient(config config.Config) (*GRPCClient, error) {
-	conn, err := grpc.NewClient(config.GRPCConnection, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	tlsCreds, err := tls.GenerateClientTLSCreds(config.Client.CertsPath)
+	if err != nil {
+		return nil, fmt.Errorf("couldn't generate tls creds: %w", err)
+	}
+
+	conn, err := grpc.NewClient(config.Client.GRPCAddress, grpc.WithTransportCredentials(tlsCreds))
 	if err != nil {
 		return nil, fmt.Errorf("couldn't create client: %w", err)
 	}

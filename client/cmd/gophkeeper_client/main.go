@@ -10,9 +10,12 @@ import (
 )
 
 func main() {
-	config := config.NewConfig()
+	config, err := config.NewConfig()
+	if err != nil {
+		log.Fatalf("create config error: %s", err)
+	}
 
-	err := logger.Initialize(config.LogLevel, config.LogPath)
+	err = logger.Initialize(config.Client.LogLevel, config.Client.LogPath)
 	if err != nil {
 		log.Fatalf("initialize logger error: %s", err)
 	}

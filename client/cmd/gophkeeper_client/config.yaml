@@ -1,8 +1,5 @@
-server:
+client:
   certs_path:
   grpc_addr: ":9090"
   log_level: "debug"
-
-storage:
-  database_dsn:
-  max_pool: 10
+  log_path:
