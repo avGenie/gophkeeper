@@ -3,9 +3,9 @@ package main
 import (
 	"log"
 
-	"github.com/avGenie/gophkeeper/server/internal/app/config"
-	"github.com/avGenie/gophkeeper/server/internal/app/logger"
-	"github.com/avGenie/gophkeeper/server/internal/app/storage/postgres"
+	"github.com/avGenie/gophkeeper/server/internal/app"
+	"github.com/avGenie/gophkeeper/server/internal/config"
+	"github.com/avGenie/gophkeeper/package/logger"
 	"go.uber.org/zap"
 )
 
@@ -15,14 +15,15 @@ func main() {
 		log.Fatalf("create config error: %s", err)
 	}
 
-	err = logger.Initialize(config)
+	err = logger.Initialize(config.Server.LogLevel, "")
 	if err != nil {
 		log.Fatalf("initialize logger error: %s", err)
 	}
 
-	storage, err := postgres.NewStorage(config.Storage)
+	app, err := app.NewApp(config)
 	if err != nil {
-		zap.L().Fatal("failed to init storage", zap.Error(err))
+		zap.S().Fatal("failed to create app", zap.Error(err))
 	}
-	defer storage.Close()
+
+	app.Run()
 }

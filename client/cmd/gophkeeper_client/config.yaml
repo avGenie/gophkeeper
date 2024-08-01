@@ -1,0 +1,5 @@
+client:
+  certs_path:
+  grpc_addr: ":9090"
+  log_level: "debug"
+  log_path:
